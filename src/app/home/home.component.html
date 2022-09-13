@@ -1,0 +1,36 @@
+<!-- <p>home works!</p> -->
+<div>
+    <h2 class="website_name">StackOverflow</h2>
+    <form class="search">
+        <input type="text" class="search__field" [(ngModel)]="searchFor" name="searchFor" placeholder="Search..." />
+        <button class="btn search__btn" (click)="search()">
+            Search
+        </button>
+    </form>
+</div>
+<!-- <h1>total packeges{{totalAngularPackages}}</h1> -->
+<div class="questions-container">
+    <div class="questions"><strong>All Questions</strong></div>
+
+    <button routerLink="/ask" class="=btn btn-primary ask">Ask a Question</button>
+    <div class="topline"></div>
+    <div class="question-box" *ngFor="let question_element of questions">
+
+        <div class="va">
+            <p class="views">{{question_element.popularity}} views</p>
+            <p class="answers">0 answers</p>
+        </div>
+        <a routerLink="/detail" class="question_ele">{{question_element.questionTitle}}</a>
+        <br>
+        <p class="description">{{question_element.questionDesc}}</p>
+        <br>
+        <div class="ud">
+            <p class="username">{{question_element.username}}</p>
+            <p class="date" *ngIf="question_element.timestamp != null"> asked {{question_element.timestamp.slice(0,10)}}
+            </p>
+        </div>
+
+        <div class="line"></div>
+    </div>
+
+</div>

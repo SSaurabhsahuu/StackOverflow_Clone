@@ -1,0 +1,24 @@
+<div class="ask-box">
+    <h2 class="head">Ask a public question</h2>
+
+    <div class="container">
+        <h3>{{postId}}</h3>
+        <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+
+            <h3 class="title">Title</h3>
+            <input type="text" class="titleInput" [(ngModel)]="questionTitle" name="questionTitle" required
+                #nameCtrl="ngModel">
+            <span class="help-block" *ngIf="nameCtrl.invalid && nameCtrl.touched">
+                Please enter question Title!</span>
+
+            <h3 class="qBody">Body</h3>
+            <input type="text" class="bodyInput" [(ngModel)]="questionBody" name="questionBody" required
+                #nameCtrl="ngModel">
+            <span class="help-block" *ngIf="nameCtrl.invalid && nameCtrl.touched">
+                Please enter question Body!</span>
+            <div><button class="btn btn-primary profile-button" type="submit" [disabled]="form.invalid">Submit
+                </button></div>
+
+        </form>
+    </div>
+</div>
