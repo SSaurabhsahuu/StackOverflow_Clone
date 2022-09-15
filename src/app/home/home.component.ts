@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-home',
@@ -7,37 +8,34 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  // totalAngularPackages:any;
-  constructor(private http: HttpClient) { }
+  questions:any;
+  length:any;
+  searchResult:any;
+  searchFor:any;
+  dataService:DataService;
+
+  constructor(private http: HttpClient,dataService:DataService) { 
+   this.dataService = dataService;
+  }
 
   ngOnInit(): void {
  
   this.http.get<any>('https://personal-stackoverflow.herokuapp.com/api/rest/questions').subscribe(data => {
       this.questions = data;
+      this.length = this.questions.length;
       // console.log("data ",data)
   })
   
   }
-  // getQuestions() {
-  //   return axiosconfig
-  //     .get('questions')
-  //     .then(function (response: any) {
-  //       return response;
-  //     })
-  //     .catch(function (error: any) {
-  //       // handle error
-  //       console.log('error advertisement/getAll >>>', error);
-  //     });
-  //   }
-  questions:any;
   
-    searchFor:any;
     search(){
-
       for(const ele of this.questions){
-        if(ele.question.includes(this.searchFor)){
-
+        if(ele.questionTitle.includes(this.searchFor)){
+          this.searchResult = ele;
         }
       }
+    }
+    openQuestion(qId:any){
+      this.dataService.questionId = qId;
     }
 }

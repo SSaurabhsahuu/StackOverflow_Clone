@@ -1,1 +1,89 @@
 /* You can add global styles to this file, and also import other style files */
+.btn {
+    --btn-clr-primary: 206 100% 52% ;
+    --btn-clr-disabled: 0 0% 50%;
+    --btn-clr-success: 123 100% 25%;
+    --btn-clr-warning: 40 100% 50%;
+    --btn-clr-danger: 0 100% 40%;
+    --btn-clr-text-light: 0 0% 100%;
+    --btn-clr-text-dark: 0 0% 13%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+    
+    min-width: 12ch;
+    outline: 1px solid var(--btn-outline, transparent);
+    border: 2px solid var(--btn-border, transparent);
+    border-radius: 0.2em;
+    
+    background-color: var(--btn-bg, transparent);
+    color: var(--btn-text, inherit);
+    padding: 0 1em;
+    
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 2.25em;
+    text-transform: uppercase;
+    letter-spacing: 0.1ch;
+    text-decoration: none;
+    
+    transition: 100ms ease;
+    cursor: pointer;
+  }
+.btn[data-type="success"] {
+    --btn-bg: hsl(var(--btn-clr-success));
+    --btn-text: hsl(var(--btn-clr-text-light));
+   }
+   .btn[data-type="success"]:not([disabled]):is(:hover, :focus) {
+    --btn-bg: hsl(var(--btn-clr-success) / .8);
+  }
+  
+  .btn[data-type="success"][disabled] {
+   --btn-bg: hsl(var(--btn-clr-success) / .5);
+   --btn-text: hsl(var(--btn-clr-success));
+  }
+  
+  /* Warning */
+  .btn[data-type="warning"] {
+   --btn-bg: hsl(var(--btn-clr-warning));
+   --btn-text: hsl(var(--btn-clr-text-dark));
+  }
+  
+  .btn[data-type="warning"]:not([disabled]):is(:hover, :focus) {
+    --btn-bg: hsl(var(--btn-clr-warning) / .8);
+  }
+  
+  .btn[data-type="warning"][disabled] {
+   --btn-bg: hsl(var(--btn-clr-warning) / .5);
+   --btn-text: hsl(var(--btn-clr-warning));
+  }
+  
+  /* Danger */
+  .btn[data-type="danger"] {
+   --btn-bg: hsl(var(--btn-clr-danger));
+   --btn-text: hsl(var(--btn-clr-text-light));
+  }
+  
+  .btn[data-type="danger"]:not([disabled]):is(:hover, :focus) {
+    --btn-bg: hsl(var(--btn-clr-danger) / .8);
+  }
+  .btn[data-type="danger"][disabled] {
+    --btn-bg: hsl(var(--btn-clr-danger) / .5);
+    --btn-text: hsl(var(--btn-clr-danger));
+   }
+
+   /* primary */
+   .btn[data-type="primary"] {
+    --btn-bg: hsl(var(--btn-clr-primary));
+    --btn-text: hsl(var(--btn-clr-text-light));
+   }
+   
+   .btn[data-type="primary"]:not([disabled]):is(:hover, :focus) {
+     --btn-bg: hsl(var(--btn-clr-primary) / .8);
+   }
+   .btn[data-type="primary"][disabled] {
+     --btn-bg: hsl(var(--btn-clr-primary) / .5);
+     --btn-text: hsl(var(--btn-clr-primary));
+    }

@@ -1,1 +1,65 @@
-<p>question-detail works!</p>
+<!-- <p>question-detail works!</p> -->
+
+<div class="questions-container" *ngIf="question != undefined">
+    <h1>{{question.questionTitle}}</h1>
+    <!-- <div class="topline"></div> -->
+    <div class="voteBlock">
+        <svg aria-hidden="true" class="svg-icon iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36">
+            <path d="M2 25h32L18 9 2 25Z"></path>
+        </svg>
+        <h3 class="votes">50</h3>
+        <svg aria-hidden="true" class="svg-icon iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36">
+            <path d="M2 11h32L18 27 2 11Z"></path>
+        </svg>
+    </div>
+    <p class="description">{{question.questionDesc}}</p>
+    <div class="ud">
+        <p class="username">{{question.username}}</p>
+        <p class="date" *ngIf="question.timestamp != null"> asked {{question.timestamp.slice(0,10)}}
+        </p>
+
+    </div>
+    <br>
+    <div class="line"></div>
+    <h2 class="answers">{{question.answers.length}} Answers
+        <button class="btn write" (click)="writeAnswer()" data-type="primary">Write Answer</button>
+        <button class="btn cancel" (click)="cancelWrite()" data-type="danger">Cancel</button>
+    </h2>
+
+    <div class="writeAnswer">
+        <!-- <h3>{{postId}}</h3> -->
+        <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+
+            <h3 class="title">New Answer</h3>
+            <h3 class="qBody">Body</h3>
+            <textarea type="text" class="bodyInput" [(ngModel)]="answerBody" name="answerBody" required
+                #nameCtrl="ngModel"></textarea>
+            <br>
+            <span class="help-block" *ngIf="nameCtrl.invalid && nameCtrl.touched">
+                Please enter question Body!</span>
+            <div><button class="btn submit" type="submit" [disabled]="form.invalid" data-type="success">Submit
+                </button></div>
+
+        </form>
+    </div>
+    <div class="answerBlock" *ngFor="let ans of question.answers">
+        <div class="voteBlock">
+            <svg aria-hidden="true" class="svg-icon iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36">
+                <path d="M2 25h32L18 9 2 25Z"></path>
+            </svg>
+            <h3 class="votes">{{ans.votesUp}}</h3>
+            <svg aria-hidden="true" class="svg-icon iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36">
+                <path d="M2 11h32L18 27 2 11Z"></path>
+            </svg>
+        </div>
+        <p class="description">{{ans.answer}}</p>
+        <br>
+        <div class="ud">
+            <p class="username">{{ans.username}}</p>
+            <p class="date" *ngIf="ans.timestamp != null"> asked {{ans.timestamp.slice(0,10)}}
+            </p>
+        </div>
+        <br>
+        <div class="line"></div>
+    </div>
+</div>

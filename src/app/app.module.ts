@@ -8,6 +8,7 @@ import { QuestionsComponent } from './questions/questions.component';
 import { HomeComponent } from './home/home.component';
 import { QuestionDetailComponent } from './question-detail/question-detail.component';
 import { AskQuestionComponent } from './ask-question/ask-question.component';
+import { DataService } from './data.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { AskQuestionComponent } from './ask-question/ask-question.component';
     AppRoutingModule,
     FormsModule 
   ],
-  providers: [],
+  providers: [DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

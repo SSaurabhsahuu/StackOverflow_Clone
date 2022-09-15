@@ -40,10 +40,8 @@ export class AskQuestionComponent implements OnInit {
       this.postId = data.id;
   })
   
-    // this.cService.addProfileDetails(submittedForm.value);
-
-  
     // this.router.navigate([`/courses`]);
 
   }
+
 }
