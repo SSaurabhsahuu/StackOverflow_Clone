@@ -19,7 +19,7 @@
     <h1 *ngIf="searchResult != undefined">{{searchResult.questionTitle}}</h1>
     <div class="questions"><strong>All Questions ({{ length }})</strong></div>
 
-    <button routerLink="/ask" class="btn ask" data-type="primary">Ask a Question</button>
+    <button routerLink="/ask" class="btn ask" data-type="primary">Ask Question</button>
     <div class="topline"></div>
     <div class="question-box" *ngFor="let question_element of questions">
 

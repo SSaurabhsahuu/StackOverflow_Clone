@@ -13,6 +13,7 @@
         </svg>
     </div>
     <p class="description">{{question.questionDesc}}</p>
+    <br>
     <div class="ud">
         <p class="username">{{question.username}}</p>
         <p class="date" *ngIf="question.timestamp != null"> asked {{question.timestamp.slice(0,10)}}
@@ -31,7 +32,7 @@
         <form (ngSubmit)="onSubmit(form)" #form="ngForm">
 
             <h3 class="title">New Answer</h3>
-            <h3 class="qBody">Body</h3>
+            <br>
             <textarea type="text" class="bodyInput" [(ngModel)]="answerBody" name="answerBody" required
                 #nameCtrl="ngModel"></textarea>
             <br>
@@ -56,7 +57,7 @@
         <br>
         <div class="ud">
             <p class="username">{{ans.username}}</p>
-            <p class="date" *ngIf="ans.timestamp != null"> asked {{ans.timestamp.slice(0,10)}}
+            <p class="date" *ngIf="ans.timestamp != null"> answered {{ans.timestamp.slice(0,10)}}
             </p>
         </div>
         <br>

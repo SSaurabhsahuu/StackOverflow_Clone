@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
  
   this.http.get<any>('https://personal-stackoverflow.herokuapp.com/api/rest/questions').subscribe(data => {
-      this.questions = data;
+      this.questions = data.reverse();
       this.length = this.questions.length;
       // console.log("data ",data)
   })

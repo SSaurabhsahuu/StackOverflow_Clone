@@ -25,15 +25,17 @@ export class QuestionDetailComponent implements OnInit {
     }
   } 
   writeAnswer(){
- 
+    (<HTMLInputElement>document.querySelector(".write")).style.display = "none";
     (<HTMLInputElement>document.querySelector(".writeAnswer")).style.display = "block";
     (<HTMLInputElement>document.querySelector(".cancel")).style.display = "inline-block";
   }
   cancelWrite(){
+    (<HTMLInputElement>document.querySelector(".write")).style.display = "inline-block";
     (<HTMLInputElement>document.querySelector(".writeAnswer")).style.display = "none";
     (<HTMLInputElement>document.querySelector(".cancel")).style.display = "none";
   }
   onSubmit(newAnswer:any) {
+    (<HTMLInputElement>document.querySelector(".write")).style.display = "inline-block";
     (<HTMLInputElement>document.querySelector(".writeAnswer")).style.display = "none";
     (<HTMLInputElement>document.querySelector(".cancel")).style.display = "none";
     if (newAnswer.invalid) {
@@ -41,16 +43,7 @@ export class QuestionDetailComponent implements OnInit {
     }
     console.log(newAnswer.value.answer);
 
-    const body =
-      // {
-      //      "questionTitle": newAnswer.value.questionTitle ,
-      //     "questionDesc":  newAnswer.value.answerBody,
-      //     "views": 0,
-      //     "username": "saurabh",
-      //     "answers": null
-
-      // };
-    {
+    const body = {
     "answer": newAnswer.value.answerBody,
     "views": 0,
     "username": "shyam",
