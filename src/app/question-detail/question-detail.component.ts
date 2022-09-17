@@ -20,8 +20,12 @@ export class QuestionDetailComponent implements OnInit {
     if(this.dataService.questionId != undefined){
       this.http.get<any>('https://personal-stackoverflow.herokuapp.com/api/rest/question/'+this.dataService.questionId).subscribe(data => {
         this.question = data;
+        localStorage.setItem("question",  JSON.stringify(this.question));
         // console.log("data ",data)
     })
+    }
+    else{
+      this.question =  JSON.parse(localStorage.getItem("question") || '{}');
     }
   } 
   writeAnswer(){

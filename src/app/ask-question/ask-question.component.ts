@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ask-question',
@@ -8,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AskQuestionComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -39,8 +40,8 @@ export class AskQuestionComponent implements OnInit {
     this.http.post<any>('https://personal-stackoverflow.herokuapp.com/api/rest/question',body).subscribe(data => {
       this.postId = data.id;
   })
-  
-    // this.router.navigate([`/courses`]);
+
+    this.router.navigate([``]);
 
   }
 

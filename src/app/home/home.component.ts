@@ -27,13 +27,13 @@ export class HomeComponent implements OnInit {
   })
   
   }
-  
+
     search(){
-      for(const ele of this.questions){
-        if(ele.questionTitle.includes(this.searchFor)){
-          this.searchResult = ele;
-        }
-      }
+      this.http.get<any>('https://personal-stackoverflow.herokuapp.com/api/rest/questions/'+this.searchFor).subscribe(data => {
+      this.questions  = data;
+      this.length = this.questions.length;
+       console.log("data ",data)
+      })
     }
     openQuestion(qId:any){
       this.dataService.questionId = qId;

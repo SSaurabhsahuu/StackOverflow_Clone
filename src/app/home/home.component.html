@@ -21,6 +21,7 @@
 
     <button routerLink="/ask" class="btn ask" data-type="primary">Ask Question</button>
     <div class="topline"></div>
+    <div *ngIf="length == 0">Question Not Found 🙁</div>
     <div class="question-box" *ngFor="let question_element of questions">
 
         <div class="va">
