@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { DataService } from '../data.service';
 
 @Component({
@@ -12,6 +13,10 @@ export class QuestionDetailComponent implements OnInit {
   dataService:DataService;
   question: any;
   answerBody:any;
+  userStatus:any;
+
+  dataChange = new Subject<void>(); // subject is event emitter
+
   constructor(private http: HttpClient,dataService:DataService) { 
    this.dataService = dataService;
   }
@@ -21,13 +26,36 @@ export class QuestionDetailComponent implements OnInit {
       this.http.get<any>('https://personal-stackoverflow.herokuapp.com/api/rest/question/'+this.dataService.questionId).subscribe(data => {
         this.question = data;
         localStorage.setItem("question",  JSON.stringify(this.question));
-        // console.log("data ",data)
+        console.log("data",data)
     })
     }
     else{
       this.question =  JSON.parse(localStorage.getItem("question") || '{}');
     }
+
+    this.dataChange.subscribe(()=>{
+      this.http.get<any>('https://personal-stackoverflow.herokuapp.com/api/rest/question/'+this.dataService.questionId).subscribe(data => {
+        this.question = data;
+        localStorage.setItem("question",  JSON.stringify(this.question));
+        console.log("data change",data)
+    })})
+    // new Observable(observer => {
+    //   setTimeout(()=>{
+    //     observer.next("In progress");
+    //   },2000)
+
+    //   setTimeout(()=>{
+    //     observer.next("started");
+    //   },4000)
+    //   setTimeout(()=>{
+    //     observer.next("completed");
+    //   },6000)
+
+    // }).subscribe(data =>{
+    //   this.userStatus = data;
+    // })
   } 
+
   writeAnswer(){
     (<HTMLInputElement>document.querySelector(".write")).style.display = "none";
     (<HTMLInputElement>document.querySelector(".writeAnswer")).style.display = "block";
@@ -57,6 +85,8 @@ export class QuestionDetailComponent implements OnInit {
     this.http.post<any>('https://personal-stackoverflow.herokuapp.com/api/rest/answer/'+this.question.id,body).subscribe(data => {
       // this.postId = data.id;
       console.log("new Answer ",data);
+
+      this.dataChange.next();// event emit so that subscribe can listen to it
   })
   
     // this.router.navigate([`/courses`]);

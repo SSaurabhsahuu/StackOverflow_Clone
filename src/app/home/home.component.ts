@@ -18,14 +18,20 @@ export class HomeComponent implements OnInit {
    this.dataService = dataService;
   }
 
-  ngOnInit(): void {
- 
-  this.http.get<any>('https://personal-stackoverflow.herokuapp.com/api/rest/questions').subscribe(data => {
+  getQuestions(){
+    this.http.get<any>('https://personal-stackoverflow.herokuapp.com/api/rest/questions').subscribe(data => {
       this.questions = data.reverse();
       this.length = this.questions.length;
       // console.log("data ",data)
   })
+  }
+  ngOnInit(): void {
+ 
+  this.getQuestions();
   
+  this.dataService.dataChange.subscribe(()=>{
+    this.getQuestions();
+  })
   }
 
     search(){

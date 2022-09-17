@@ -1,5 +1,5 @@
 # StackOverflowClone is Live
-    [Live](https://stackoverflow-clone-a77e8.web.app/)
+[https://stackoverflow-clone-a77e8.web.app/](https://stackoverflow-clone-a77e8.web.app/)
     
 # StackOverflowClone
  

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-ask-question',
@@ -8,14 +10,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./ask-question.component.css']
 })
 export class AskQuestionComponent implements OnInit {
-
-  constructor(private http: HttpClient,private router: Router) { }
-
-  ngOnInit(): void {
-  }
   questionTitle:any;
   questionBody:any;
   postId :any;
+  dataService:DataService;
+  
+  constructor(private http: HttpClient,private router: Router,dataService:DataService) { 
+    this.dataService = dataService; 
+  }
+
+  ngOnInit(): void {
+  }
+  
+
   onSubmit(newQuestion:any) {
     if (newQuestion.invalid) {
       return;
@@ -40,6 +47,8 @@ export class AskQuestionComponent implements OnInit {
     this.http.post<any>('https://personal-stackoverflow.herokuapp.com/api/rest/question',body).subscribe(data => {
       this.postId = data.id;
   })
+
+    this.dataService.dataChange.next(); // event emit so that subscribe can listen to it
 
     this.router.navigate([``]);
 
