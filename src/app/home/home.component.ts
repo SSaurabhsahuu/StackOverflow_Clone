@@ -43,5 +43,9 @@ export class HomeComponent implements OnInit {
     }
     openQuestion(qId:any){
       this.dataService.questionId = qId;
+      this.http.put<any>('https://personal-stackoverflow.herokuapp.com/api/rest/question/views/'+this.dataService.questionId,{}).
+      subscribe(data => {
+        console.log(" views updated");
+      })
     }
 }
