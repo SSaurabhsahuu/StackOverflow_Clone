@@ -55,14 +55,15 @@
  
 }
 .views{
-    display: inline;
-    position:absolute;
-    top:-20px;
+    /* display: inline; */
+    /* position:absolute; */
+    margin: 0px;
     color: hsl(358,64%,35%);
 }
 .answers{
-    display: inline;
-    position:absolute;
+    /* display: inline; */
+    /* position:absolute; */
+    margin: 0px;
     color: rgb(235, 237, 235);
     background-color: hsl(140,41%,31%);
     border-radius: 5px;
@@ -77,14 +78,15 @@
 
 }
 .question_ele{
-    position: absolute;
+    /* position: absolute; */
     font-size: large;
     color: hsl(209,100%,37.5%);
     text-decoration: none;
 }
 .description{
-    position: absolute;
-    margin-top: 20px;
+    /* position: absolute; */
+    /* margin-top: 20px; */
+    margin: 0px;
     font-size: small;
     color:hsl(210,8%,25%);
     width: fit-content;
