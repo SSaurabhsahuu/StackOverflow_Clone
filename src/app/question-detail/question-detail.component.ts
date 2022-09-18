@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { DataService } from '../data.service';
+import { LoadingService } from '../loading.service';
 
 @Component({
   selector: 'app-question-detail',
@@ -15,10 +16,12 @@ export class QuestionDetailComponent implements OnInit {
   question: any;
   answerBody:any;
   userStatus:any;
+  loading$ = this.loader.loading$;
 
   dataChange = new Subject<void>(); // subject is event emitter
 
-  constructor(private http: HttpClient,private router: Router,dataService:DataService) { 
+  constructor(private http: HttpClient,private router: Router,dataService:DataService,
+    public loader: LoadingService) { 
    this.dataService = dataService;
   }
 

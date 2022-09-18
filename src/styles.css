@@ -1,4 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+.spinner {
+  margin: 5rem auto;
+  text-align: center;
+
+  
+}
+.spinnerSvg {
+  height: 6rem;
+  width: 6rem;
+  fill: #f38e82;
+  animation: rotate 2s infinite linear;
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .btn {
     --btn-clr-primary: 206 100% 52% ;
     --btn-clr-disabled: 0 0% 50%;

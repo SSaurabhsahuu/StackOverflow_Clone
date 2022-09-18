@@ -14,7 +14,6 @@
 <button class="btn" data-type="danger">Button</button>
 <button class="btn" data-type="primary">Button</button> -->
 
-<!-- <h1>total packeges{{totalAngularPackages}}</h1> -->
 <div class="questions-container">
     <h1 *ngIf="searchResult != undefined">{{searchResult.questionTitle}}</h1>
     <div class="questions"><strong>All Questions ({{ length }})</strong></div>
@@ -22,6 +21,11 @@
     <button routerLink="/ask" class="btn ask" data-type="primary">Ask Question</button>
     <div class="topline"></div>
     <div *ngIf="length == 0">Question Not Found 🙁</div>
+    <div class="spinner" *ngIf="loading$ | async">
+        <svg class="spinnerSvg">
+            <use href="../../assets/icons.svg#icon-loader"></use>
+        </svg>
+    </div>
     <div class="question-box" *ngFor="let question_element of questions">
 
         <div class="va">
