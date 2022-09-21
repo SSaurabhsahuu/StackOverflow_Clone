@@ -34,15 +34,19 @@
 
             <h3 class="title">New Answer</h3>
             <br>
+            <button type='button' (click)="addCode()">Code</button>
             <textarea type="text" class="bodyInput" [(ngModel)]="answerBody" name="answerBody" required
                 #nameCtrl="ngModel"></textarea>
             <br>
             <span class="help-block" *ngIf="nameCtrl.invalid && nameCtrl.touched">
                 Please enter question Body!</span>
+
+
             <div><button class="btn submit" type="submit" [disabled]="form.invalid" data-type="success">Submit
                 </button></div>
 
         </form>
+        <div class="bodyOutput" *ngIf="answerBody" [innerHtml]="addBreak(answerBody)"></div>
     </div>
     <div class="spinner" *ngIf="loading$ | async">
         <svg class="spinnerSvg">
@@ -60,8 +64,9 @@
                 <path d="M2 11h32L18 27 2 11Z"></path>
             </svg>
         </div>
-        <p class="description">{{ans.answer}}</p>
+        <p class="description" [innerHtml]="ans.answer"></p>
         <br>
+
         <div class="ud">
             <p class="username">{{ans.username}}</p>
             <p class="date" *ngIf="ans.timestamp != null"> answered {{ans.timestamp.slice(0,10)}}

@@ -12,6 +12,7 @@ import { DataService } from './data.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule, MatToolbarModule } from '@angular/material';
 import { NetworkInterceptor } from './network.interceptor';
+import { AuthComponent } from './auth/auth.component';
 // import { MatButtonModule,MatToolbarModule, MatProgressSpinnerModule } from '@angular/material';
 
 @NgModule({
@@ -20,7 +21,8 @@ import { NetworkInterceptor } from './network.interceptor';
     QuestionsComponent,
     HomeComponent,
     QuestionDetailComponent,
-    AskQuestionComponent
+    AskQuestionComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,

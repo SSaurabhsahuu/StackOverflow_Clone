@@ -3,11 +3,13 @@
     <h2 class="website_name">StackOverflow</h2>
     <form class="search">
         <input type="text" class="search__field" [(ngModel)]="searchFor" name="searchFor" placeholder="Search..." />
-        <button class="btn search__btn" (click)="search()">
+        <button class="btn " (click)="search()">
             Search
         </button>
     </form>
+    <button class="btn" routerLink="/auth" data-type="primary">Login</button>
 </div>
+<!-- <h2>Welcome {{}}</h2> -->
 
 <!-- <button class="btn" data-type="success">Button</button>
 <button class="btn" data-type="warning">Button</button>
