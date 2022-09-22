@@ -35,18 +35,32 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   signup(username: string, password: string) {
-    return this.http.post<AuthResponseData>(this.base_url + 'api/rest/user', {
-      username: username,
-      password: password,
-      authorities: [],
-    });
+    return this.http
+      .post<any>(this.base_url + 'api/rest/user', {
+        username: username,
+        password: password,
+        authorities: [],
+      })
+      // .pipe(
+      //   catchError(this.handleError),
+      //   tap((resData) => {
+      //     this.handleAuthentication(resData.username);
+      //   })
+      // );
   }
 
   login(username: string, password: string) {
-    return this.http.post<AuthResponseData>(this.base_url + 'login', {
-      username: username,
-      password: password,
-    });
+    return this.http
+      .post<any>(this.base_url + 'login', {
+        username: username,
+        password: password,
+      })
+      .pipe(
+        catchError(this.handleError),
+        tap((resData) => {
+          this.handleAuthentication(resData.token);
+        })
+      );
   }
 
   autoLogin() {
@@ -61,20 +75,15 @@ export class AuthService {
       return;
     }
 
-    const loadedUser = new User(
-      userData.email,
-      userData.id,
-      userData._token,
-      new Date(userData._tokenExpirationDate)
-    );
+    // const loadedUser = new User(userData.email, userData._token);
 
-    if (loadedUser.token) {
-      this.user.next(loadedUser);
-      const expirationDuration =
-        new Date(userData._tokenExpirationDate).getTime() -
-        new Date().getTime();
-      this.autoLogout(expirationDuration);
-    }
+    // if (loadedUser.token) {
+    //   this.user.next(loadedUser);
+    //   const expirationDuration =
+    //     new Date(userData._tokenExpirationDate).getTime() -
+    //     new Date().getTime();
+    //   this.autoLogout(expirationDuration);
+    // }
   }
 
   logout() {
@@ -97,24 +106,16 @@ export class AuthService {
     }, expirationDuration);
   }
 
-  private handleAuthentication(
-    email: string,
+  private handleAuthentication(token: string) {
+    // const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
 
-    userId: string,
+    // const user = new User(username, token);
 
-    token: string,
+    // this.user.next(user);
 
-    expiresIn: number
-  ) {
-    const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+    // this.autoLogout(expiresIn * 1000);
 
-    const user = new User(email, userId, token, expirationDate);
-
-    this.user.next(user);
-
-    this.autoLogout(expiresIn * 1000);
-
-    localStorage.setItem('userData', JSON.stringify(user));
+    localStorage.setItem('userData', token);
   }
 
   private handleError(errorRes: HttpErrorResponse) {
