@@ -15,6 +15,7 @@ export class QuestionDetailComponent implements OnInit {
   dataService: DataService;
   question: any;
   answerBody: any;
+  answerOutput: any;
   userStatus: any;
   loading$ = this.loader.loading$;
 
@@ -114,10 +115,30 @@ export class QuestionDetailComponent implements OnInit {
       'none';
   }
   addBreak(str: any) {
-    return str.replace(/\n/g, '<br/>');
+    return str.replace(/\n/g, '<br>');
+  }
+  addBold() {
+    this.answerBody += '@ Bold text @';
   }
   addCode() {
-    this.answerBody += `<div class="descP">write code here</div>`;
+    // let code = 'write code here';
+    this.answerBody += '`write code here`';
+    // this.answerOutput += `<div class="descP">${code}</div>`;
+  }
+  addStyle(str: any) {
+    str = this.addBreak(str);
+
+    while (str.search('@') != -1) {
+      str = str.replace('@', `<p class="bold">`);
+      str = str.replace('@', `</p>`);
+    }
+    while (str.search('<br>`') != -1) {
+      str = str.replace('<br>`', `<div class="descP">`);
+      str = str.replace('`', `</div>`);
+    }
+
+    this.answerOutput = str;
+    return str;
   }
   onSubmit(newAnswer: any) {
     (<HTMLInputElement>document.querySelector('.write')).style.display =
@@ -129,21 +150,24 @@ export class QuestionDetailComponent implements OnInit {
     if (newAnswer.invalid) {
       return;
     }
-    console.log(newAnswer.value.answerBody);
-    newAnswer.value.answerBody = this.addBreak(newAnswer.value.answerBody);
+    console.log(
+      newAnswer.value.answerBody,
+      '\n output ',
+      newAnswer.value.answerOutput
+    );
+    // newAnswer.value.answerBody = this.addBreak(newAnswer.value.answerBody);
     console.log('br  ', newAnswer.value.answerBody);
-    let desc = `
-    <p class="descP">${newAnswer.value.answerBody}</p>
-                  `;
+
     const body = {
       answer: newAnswer.value.answerBody,
       views: 0,
-      username: 'shyam',
+      username: JSON.parse(localStorage.getItem('userData') || '').username,
       votesUp: 0,
       votesDown: 0,
     };
     const headers = {
-      Authorization: 'Bearer ' + localStorage.getItem('userData'),
+      Authorization:
+        'Bearer ' + JSON.parse(localStorage.getItem('userData') || '').token,
     };
     this.http
       .post<any>(

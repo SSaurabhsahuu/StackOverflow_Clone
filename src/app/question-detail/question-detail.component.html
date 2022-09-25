@@ -33,20 +33,21 @@
         <form (ngSubmit)="onSubmit(form)" #form="ngForm">
 
             <h3 class="title">New Answer</h3>
+            <div class="styleButtons">
+                <button type='button' (click)="addBold()">Bold</button>
+                <button type='button' (click)="addCode()">Code</button>
+            </div>
             <br>
-            <button type='button' (click)="addCode()">Code</button>
             <textarea type="text" class="bodyInput" [(ngModel)]="answerBody" name="answerBody" required
                 #nameCtrl="ngModel"></textarea>
             <br>
             <span class="help-block" *ngIf="nameCtrl.invalid && nameCtrl.touched">
-                Please enter question Body!</span>
-
-
+                Please enter Answer Body!</span>
+            <div class="bodyOutput" *ngIf="answerBody" [innerHtml]="addStyle(answerBody)"></div>
             <div><button class="btn submit" type="submit" [disabled]="form.invalid" data-type="success">Submit
                 </button></div>
-
         </form>
-        <div class="bodyOutput" *ngIf="answerBody" [innerHtml]="addBreak(answerBody)"></div>
+
     </div>
     <div class="spinner" *ngIf="loading$ | async">
         <svg class="spinnerSvg">
@@ -64,7 +65,7 @@
                 <path d="M2 11h32L18 27 2 11Z"></path>
             </svg>
         </div>
-        <p class="description" [innerHtml]="ans.answer"></p>
+        <p class="description" [innerHtml]="addStyle(ans.answer)"></p>
         <br>
 
         <div class="ud">
