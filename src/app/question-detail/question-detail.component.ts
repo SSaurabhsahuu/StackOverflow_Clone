@@ -30,19 +30,18 @@ export class QuestionDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let date = new Date();
-    let start = date.getSeconds();
-    console.log('start ', start);
-    const headers = {
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYXVyYWJoIiwiZXhwIjoxNjYzNzgxNjk1LCJpYXQiOjE2NjM3ODA3OTV9.nJhFRhBBpF5fWq0m5nrJTvZbk8ZuUZBX79ehsKvvals',
-    };
+    // let date = new Date();
+    // let start = date.getSeconds();
+    // console.log('start ', start);
+
+    // const headers = {
+    //   Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('userData') || '').token,
+    // };
     if (this.dataService.questionId != undefined) {
       this.http
         .get<any>(
           'https://personal-stackoverflow.herokuapp.com/api/rest/question/' +
-            this.dataService.questionId,
-          { headers }
+            this.dataService.questionId
         )
         .subscribe((data) => {
           this.question = data;
@@ -58,8 +57,7 @@ export class QuestionDetailComponent implements OnInit {
       this.http
         .get<any>(
           'https://personal-stackoverflow.herokuapp.com/api/rest/question/' +
-            this.dataService.questionId,
-          { headers }
+            this.dataService.questionId
         )
         .subscribe((data) => {
           this.question = data;
@@ -145,8 +143,7 @@ export class QuestionDetailComponent implements OnInit {
       votesDown: 0,
     };
     const headers = {
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYXVyYWJoIiwiZXhwIjoxNjYzNzgxNjk1LCJpYXQiOjE2NjM3ODA3OTV9.nJhFRhBBpF5fWq0m5nrJTvZbk8ZuUZBX79ehsKvvals',
+      Authorization: 'Bearer ' + localStorage.getItem('userData'),
     };
     this.http
       .post<any>(

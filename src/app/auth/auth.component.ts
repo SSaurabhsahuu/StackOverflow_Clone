@@ -10,8 +10,8 @@ import { AuthService, AuthResponseData } from './auth.service';
 
 @Component({
   selector: 'app-auth',
-
   templateUrl: './auth.component.html',
+  styleUrls: ['./auth.component.css'],
 })
 export class AuthComponent {
   isLoginMode = true;
@@ -37,7 +37,7 @@ export class AuthComponent {
 
     let authObs: Observable<AuthResponseData>;
 
-    this.isLoading = true;
+    // this.isLoading = true;
 
     if (this.isLoginMode) {
       authObs = this.authService.login(username, password);
@@ -49,18 +49,17 @@ export class AuthComponent {
       (resData) => {
         console.log(resData);
 
-        this.isLoading = false;
+        // this.isLoading = false;
 
         this.router.navigate(['/']);
+      },
+      (errorMessage) => {
+        console.log(errorMessage);
+
+        this.error = errorMessage;
+
+        // this.isLoading = false;
       }
-      // ,
-      // (errorMessage) => {
-      //   console.log(errorMessage);
-
-      //   this.error = errorMessage;
-
-      //   this.isLoading = false;
-      // }
     );
 
     form.reset();

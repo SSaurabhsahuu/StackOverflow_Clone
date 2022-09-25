@@ -9,26 +9,24 @@ import { catchError, tap } from 'rxjs/operators';
 import { throwError, BehaviorSubject } from 'rxjs';
 
 import { User } from './user.model';
+import jwt_decode from 'jwt-decode';
 
 export interface AuthResponseData {
+  username?: string;
+  passwordHash?: string;
+  token: string;
+  authorities: [];
   // kind: string;
-
   // idToken: string;
-
-  username: string;
-
   // refreshToken: string;
-
   // expiresIn: string;
-
   // localId: string;
-
   // registered?: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  user = new BehaviorSubject<User | null>(null);
+  user = new BehaviorSubject<User | null>(null); // store user data
   base_url = 'https://personal-stackoverflow.herokuapp.com/';
   private tokenExpirationTimer: any;
 
@@ -36,47 +34,57 @@ export class AuthService {
 
   signup(username: string, password: string) {
     return this.http
-      .post<any>(this.base_url + 'api/rest/user', {
+      .post<AuthResponseData>(this.base_url + 'api/rest/user', {
         username: username,
         password: password,
         authorities: [],
       })
-      // .pipe(
-      //   catchError(this.handleError),
-      //   tap((resData) => {
-      //     this.handleAuthentication(resData.username);
-      //   })
-      // );
+      .pipe(
+        catchError(this.handleError)
+        // ,
+        // tap((resData) => {
+        //   this.handleAuthentication(resData);
+        // })
+      );
   }
 
   login(username: string, password: string) {
     return this.http
-      .post<any>(this.base_url + 'login', {
+      .post<AuthResponseData>(this.base_url + 'login', {
         username: username,
         password: password,
       })
       .pipe(
         catchError(this.handleError),
         tap((resData) => {
-          this.handleAuthentication(resData.token);
+          this.handleAuthentication(resData);
         })
       );
   }
+  private handleAuthentication(userData: AuthResponseData) {
+    // const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+    let res: any = jwt_decode(userData.token);
+    console.log('token   ', res);
+    const userObj = new User(res.sub, userData.token);
 
+    this.user.next(userObj); // user data modified
+
+    // this.autoLogout(expiresIn * 1000);
+
+    localStorage.setItem('userData', JSON.stringify(userObj));
+    console.log('token value ', localStorage.getItem('userData'));
+  }
   autoLogin() {
-    const userData: {
-      email: string;
-      id: string;
-      _token: string;
-      _tokenExpirationDate: string;
-    } = JSON.parse(localStorage.getItem('userData') || '{}');
-
-    if (!userData) {
-      return;
-    }
-
+    // const userData: {
+    //   email: string;
+    //   id: string;
+    //   _token: string;
+    //   _tokenExpirationDate: string;
+    // } = JSON.parse(localStorage.getItem('userData') || '{}');
+    // if (!userData) {
+    //   return;
+    // }
     // const loadedUser = new User(userData.email, userData._token);
-
     // if (loadedUser.token) {
     //   this.user.next(loadedUser);
     //   const expirationDuration =
@@ -89,15 +97,15 @@ export class AuthService {
   logout() {
     this.user.next(null);
 
-    this.router.navigate(['/auth']);
+    // this.router.navigate(['/auth']);
 
     localStorage.removeItem('userData');
 
-    if (this.tokenExpirationTimer) {
-      clearTimeout(this.tokenExpirationTimer);
-    }
+    // if (this.tokenExpirationTimer) {
+    //   clearTimeout(this.tokenExpirationTimer);
+    // }
 
-    this.tokenExpirationTimer = null;
+    // this.tokenExpirationTimer = null;
   }
 
   autoLogout(expirationDuration: number) {
@@ -106,19 +114,8 @@ export class AuthService {
     }, expirationDuration);
   }
 
-  private handleAuthentication(token: string) {
-    // const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-
-    // const user = new User(username, token);
-
-    // this.user.next(user);
-
-    // this.autoLogout(expiresIn * 1000);
-
-    localStorage.setItem('userData', token);
-  }
-
   private handleError(errorRes: HttpErrorResponse) {
+    console.log('error ', errorRes);
     let errorMessage = 'An unknown error occurred!';
 
     if (!errorRes.error || !errorRes.error.error) {

@@ -47,10 +47,14 @@ export class AskQuestionComponent implements OnInit {
     // "username": "saurabh",
     // "answers": null
     // }
+    const headers = {
+      Authorization: 'Bearer ' + localStorage.getItem('userData'),
+    };
     this.http
       .post<any>(
         'https://personal-stackoverflow.herokuapp.com/api/rest/question',
-        body
+        body,
+        {headers}
       )
       .subscribe((data) => {
         this.postId = data.id;

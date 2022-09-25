@@ -2,6 +2,7 @@ import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from '../data.service';
 import { LoadingService } from '../loading.service';
+import { AuthService } from '../auth/auth.service';
 // import icons from '../../assets/icons.svg';
 @Component({
   selector: 'app-home',
@@ -15,10 +16,11 @@ export class HomeComponent implements OnInit {
   searchFor: any;
   dataService: DataService;
   loading$ = this.loader.loading$;
-
+  user: any;
   constructor(
     private http: HttpClient,
     dataService: DataService,
+    private authService: AuthService,
     public loader: LoadingService
   ) {
     this.dataService = dataService;
@@ -33,21 +35,22 @@ export class HomeComponent implements OnInit {
     this.dataService.dataChange.subscribe(() => {
       this.getQuestions();
     });
+    this.authService.user.subscribe((data) => {
+      this.user = data;
+    });
+
+    if (localStorage.getItem('userData') != null)
+      this.user = JSON.parse(localStorage.getItem('userData') || '');
   }
   getQuestions() {
     // const headers = {
-    //   Authorization:
-    //     'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYXVyYWJoIiwiZXhwIjoxNjYzODI1MDUyLCJpYXQiOjE2NjM4MjQxNTJ9.zj-kxc1zcaeHH4DD_VSF2xwfbeQmRrifpmu6ePbwsT8',
+    //   Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('userData') || '').token,
     // };
-    const headers = {
-      Authorization: 'Bearer ' + localStorage.getItem('userData'),
-    };
     console.log('token value ', localStorage.getItem('userData'));
 
     this.http
       .get<any>(
-        'https://personal-stackoverflow.herokuapp.com/api/rest/questions',
-        { headers }
+        'https://personal-stackoverflow.herokuapp.com/api/rest/questions'
       )
       .subscribe((data) => {
         this.questions = data.reverse();
@@ -82,14 +85,7 @@ export class HomeComponent implements OnInit {
         console.log(' views updated');
       });
   }
-  //  renderSpinner(parentEle:any){
-  //   const html =`<div class="spinner">
-  //   <svg>
-  //     <use href="../../assets/icons.svg#icon-loader"></use>
-  //   </svg>
-  // </div>
-  //   `;
-  //   parentEle.innerHTML = "";
-  //   parentEle.insertAdjacentHTML("afterbegin", html);
-  // };
+  onLogout() {
+    this.authService.logout();
+  }
 }

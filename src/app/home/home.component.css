@@ -1,116 +1,120 @@
-.website_name{
-    display:inline;
-    width: 100px;
+.website_name {
+  display: inline;
+  width: 100px;
 }
-.search{
-    display:inline;
-    width:auto;
-    margin-left:150px;
+.search {
+  display: inline;
+  width: auto;
+  margin-left: 150px;
 }
-.search__field{
-    width: 300px;
+.search__field {
+  width: 300px;
 }
-.questions-container{
-    position:relative;
-    margin-left: 200px;
-    height: 500px;
-    width: 700px;
-    border:1px solid rgb(255, 255, 255);
-    
+.username {
+  display: inline;
+  margin-left: 50px;
 }
-.questions{
-    display:inline;
-    position:absolute;
-    top:10px;
-    left: 20px;
-    font-size: larger;
+.logout {
+  margin-left: 30px;
 }
-.ask{
-    display:inline;
-    position:absolute;
-    top:10px;
-    right:0px;
-    /* background-color: rgb(54, 54, 228); */
+.questions-container {
+  position: relative;
+  margin-left: 200px;
+  height: 500px;
+  width: 730px;
+  border: 1px solid rgb(255, 255, 255);
 }
-.topline{
-    margin-top: 50px;
-    height: 1px;
-    background-color: rgb(141, 137, 137);
+.questions {
+  display: inline;
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-size: larger;
+}
+.ask {
+  display: inline;
+  position: absolute;
+  top: 10px;
+  right: 0px;
+  /* background-color: rgb(54, 54, 228); */
+}
+.topline {
+  margin-top: 50px;
+  height: 1px;
+  background-color: rgb(141, 137, 137);
 }
 
-.question-box{
-    margin-top: 10px;
-    /* height: fit-content; */
-    background-image: linear-gradient(rgba(245, 245, 245, 0),whitesmoke);
+.question-box {
+  margin-top: 10px;
+  /* height: fit-content; */
+  background-image: linear-gradient(rgba(245, 245, 245, 0), whitesmoke);
 }
 
-.va{
-    display: inline-block;
-    position:relative;
-    /* border: 1px solid red; */
-    top: 5px;
-    left: 15px;
-    width: 70px;
-    height: 50px;
- 
+.va {
+  display: inline-block;
+  position: relative;
+  /* border: 1px solid red; */
+  top: 5px;
+  left: 15px;
+  width: 85px;
+  height: 50px;
 }
-.views{
-    /* display: inline; */
-    /* position:absolute; */
-    margin: 0px;
-    color: hsl(358,64%,35%);
+.views {
+  /* display: inline; */
+  /* position:absolute; */
+  margin: 0px;
+  color: hsl(358, 64%, 35%);
 }
-.answers{
-    /* display: inline; */
-    /* position:absolute; */
-    margin: 0px;
-    color: rgb(235, 237, 235);
-    background-color: hsl(140,41%,31%);
-    border-radius: 5px;
-    padding: 2px;
+.answers {
+  /* display: inline; */
+  /* position:absolute; */
+  margin: 0px;
+  color: rgb(235, 237, 235);
+  background-color: hsl(140, 41%, 31%);
+  border-radius: 5px;
+  padding: 2px;
 }
-.qd{
-    display: inline-block;
-    position: absolute;;
-    margin-left:30px;
-    /* border: 1px solid red; */
-    width:600px;
-
+.qd {
+  display: inline-block;
+  position: absolute;
+  margin-left: 30px;
+  /* border: 1px solid red; */
+  width: 600px;
 }
-.question_ele{
-    /* position: absolute; */
-    font-size: large;
-    color: hsl(209,100%,37.5%);
-    text-decoration: none;
+.question_ele {
+  /* position: absolute; */
+  font-size: large;
+  color: hsl(209, 100%, 37.5%);
+  text-decoration: none;
 }
-.description{
-    /* position: absolute; */
-    /* margin-top: 20px; */
-    margin: 0px;
-    font-size: small;
-    color:hsl(210,8%,25%);
-    width: fit-content;
+.description {
+  /* position: absolute; */
+  /* margin-top: 20px; */
+  margin: 0px;
+  font-size: small;
+  color: hsl(210, 8%, 25%);
+  width: fit-content;
 }
-.username{
-    display: inline;
-    color: hsl(206,100%,40%);
+.questionUsername {
+  display: inline;
+  color: hsl(206, 100%, 40%);
 }
-.date{
-    display: inline;
-    color: gray;
+.date {
+  display: inline;
+  color: gray;
 }
-.ud{
-    margin: 5px 0px;
-    /* padding: 5px 0px; */
-    /* border:1px solid red; */
-    float: right;
-    /* width: 200px; */
-    font-size: smaller;
-    /* padding-right: 0; */
+.ud {
+  margin: 5px 0px;
+  /* padding: 5px 0px; */
+  /* border:1px solid red; */
+  float: right;
+  /* width: 200px; */
+  font-size: smaller;
+  /* padding-right: 0; */
 }
-.line{
-    height: 1.5px;
-    /* margin: 0px 5px; */
-    background-color: rgb(177, 175, 175);
-    clear: both;
+.line {
+  height: 1.5px;
+  /* margin: 0px 5px; */
+  background-color: rgb(177, 175, 175);
+  clear: both;
 }

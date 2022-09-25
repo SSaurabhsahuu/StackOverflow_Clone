@@ -7,9 +7,12 @@
             Search
         </button>
     </form>
-    <button class="btn" routerLink="/auth" data-type="primary">Login</button>
+    <button class="btn" *ngIf="user == null" routerLink="/auth" data-type="primary">Login</button>
+    <h2 class="username" *ngIf="user != null">Welcome {{user.username}}</h2>
+    <button class="btn logout" *ngIf="user != null" routerLink="/" (click)="onLogout()"
+        data-type="danger">Logout</button>
 </div>
-<!-- <h2>Welcome {{}}</h2> -->
+<!-- <h2 *ngIf="user != null">Welcome {{user.username}}</h2> -->
 
 <!-- <button class="btn" data-type="success">Button</button>
 <button class="btn" data-type="warning">Button</button>
@@ -43,7 +46,7 @@
 
         <br>
         <div class="ud">
-            <p class="username">{{question_element.username}}</p>
+            <p class="questionUsername">{{question_element.username}}</p>
             <p class="date" *ngIf="question_element.timestamp != null"> asked {{question_element.timestamp.slice(0,10)}}
             </p>
         </div>
