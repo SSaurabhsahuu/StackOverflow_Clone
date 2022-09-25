@@ -126,8 +126,9 @@ export class QuestionDetailComponent implements OnInit {
     // this.answerOutput += `<div class="descP">${code}</div>`;
   }
   addStyle(str: any) {
+   
     str = this.addBreak(str);
-
+    
     while (str.search('@') != -1) {
       str = str.replace('@', `<p class="bold">`);
       str = str.replace('@', `</p>`);
@@ -136,7 +137,7 @@ export class QuestionDetailComponent implements OnInit {
       str = str.replace('<br>`', `<div class="descP">`);
       str = str.replace('`', `</div>`);
     }
-
+   
     this.answerOutput = str;
     return str;
   }
@@ -150,13 +151,13 @@ export class QuestionDetailComponent implements OnInit {
     if (newAnswer.invalid) {
       return;
     }
-    console.log(
-      newAnswer.value.answerBody,
-      '\n output ',
-      newAnswer.value.answerOutput
-    );
+    // console.log(
+    //   newAnswer.value.answerBody,
+    //   '\n output ',
+    //   newAnswer.value.answerOutput
+    // );
     // newAnswer.value.answerBody = this.addBreak(newAnswer.value.answerBody);
-    console.log('br  ', newAnswer.value.answerBody);
+    // console.log('br  ', newAnswer.value.answerBody);
 
     const body = {
       answer: newAnswer.value.answerBody,

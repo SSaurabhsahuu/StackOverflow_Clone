@@ -13,11 +13,18 @@
                 Please enter question Title!</span>
 
             <h3 class="qBody">Body</h3>
+            <div class="styleButtons">
+                <button type='button' (click)="addBold()">Bold</button>
+                <button type='button' (click)="addCode()">Code</button>
+            </div>
+            <br>
             <textarea type="text" class="bodyInput" [(ngModel)]="questionBody" name="questionBody" required
                 #nameCtrl="ngModel"></textarea>
             <br>
             <span class="help-block" *ngIf="nameCtrl.invalid && nameCtrl.touched">
                 Please enter question Body!</span>
+
+            <div class="bodyOutput" *ngIf="questionBody" [innerHtml]="addStyle(questionBody)"></div>
             <div><button class="btn submit" data-type="primary" type="submit" [disabled]="form.invalid">Submit
                 </button></div>
 
