@@ -69,7 +69,10 @@ export class AskQuestionComponent implements OnInit {
     const headers = {
       Authorization:
         'Bearer ' + JSON.parse(localStorage.getItem('userData') || '').token,
+      'Access-Control-Allow-Origin': '*',
     };
+    console.log('token ', headers);
+    console.log('fdsds ', localStorage.getItem('userData'));
     this.http
       .post<any>(
         'https://personal-stackoverflow.herokuapp.com/api/rest/question',
