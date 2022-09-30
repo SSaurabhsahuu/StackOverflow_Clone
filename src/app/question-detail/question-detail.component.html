@@ -1,18 +1,37 @@
 <!-- <p>question-detail works!</p> -->
+<button (click)="gotoLogin()">open</button>
+<h2>{{authRequired}}</h2>
+
+<!-- overlay  -->
+<div [ngClass]="{
+    'hidden': !authRequired,
+    'overlay': authRequired
+}" (click)="closeModal()"></div>
+
+<!-- modal -->
+<div [ngClass]="{
+    'hidden': !authRequired,
+    'modal': authRequired
+}">
+    <button class="close-modal" (click)="closeModal()">X</button>
+    <app-auth [flag]="parentFlag"></app-auth>
+</div>
 
 <div class="questions-container" *ngIf="question != undefined">
     <h1>{{question.questionTitle}}</h1>
     <!-- <div class="topline"></div> -->
     <div class="voteBlock">
-        <svg aria-hidden="true" class="svg-icon iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36">
+        <svg aria-hidden="true" (click)="gotoLogin()" class="svg-icon iconArrowUpLg" width="36" height="36"
+            viewBox="0 0 36 36">
             <path d="M2 25h32L18 9 2 25Z"></path>
         </svg>
         <h3 class="votes">50</h3>
-        <svg aria-hidden="true" class="svg-icon iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36">
+        <svg aria-hidden="true" (click)="gotoLogin()" class="svg-icon iconArrowDownLg" width="36" height="36"
+            viewBox="0 0 36 36">
             <path d="M2 11h32L18 27 2 11Z"></path>
         </svg>
     </div>
-    <p class="description">{{question.questionDesc}}</p>
+    <p class="description" [innerHtml]="addStyle(question.questionDesc)"></p>
     <br>
     <div class="ud">
         <p class="username">{{question.username}}</p>
@@ -57,11 +76,13 @@
     <div class="answerBlock" *ngFor="let ans of question.answers">
 
         <div class="voteBlock">
-            <svg aria-hidden="true" class="svg-icon iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36">
+            <svg aria-hidden="true" (click)="gotoLogin()" class="svg-icon iconArrowUpLg" width="36" height="36"
+                viewBox="0 0 36 36">
                 <path d="M2 25h32L18 9 2 25Z"></path>
             </svg>
             <h3 class="votes">{{ans.votesUp}}</h3>
-            <svg aria-hidden="true" class="svg-icon iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36">
+            <svg aria-hidden="true" (click)="gotoLogin()" class="svg-icon iconArrowDownLg" width="36" height="36"
+                viewBox="0 0 36 36">
                 <path d="M2 11h32L18 27 2 11Z"></path>
             </svg>
         </div>

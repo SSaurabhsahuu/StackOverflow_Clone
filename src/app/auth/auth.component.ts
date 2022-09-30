@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { NgForm } from '@angular/forms';
 
@@ -15,11 +15,9 @@ import { AuthService, AuthResponseData } from './auth.service';
 })
 export class AuthComponent {
   isLoginMode = true;
-
   isLoading = false;
-
   error: string = '';
-
+  @Input() flag = false;
   constructor(private authService: AuthService, private router: Router) {}
 
   onSwitchMode() {
@@ -45,22 +43,22 @@ export class AuthComponent {
       authObs = this.authService.signup(username, password);
     }
 
-    authObs.subscribe(
-      (resData) => {
+    authObs.subscribe({
+      next: (resData) => {
         console.log(resData);
 
         // this.isLoading = false;
-
-        this.router.navigate(['/']);
+        if (this.flag == false) this.router.navigate(['/']);
+        else window.location.reload();
       },
-      (errorMessage) => {
+      error: (errorMessage) => {
         console.log(errorMessage);
 
         this.error = errorMessage;
 
         // this.isLoading = false;
-      }
-    );
+      },
+    });
 
     form.reset();
   }

@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnInit,
+  ViewEncapsulation,
+} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from '../data.service';
 import { LoadingService } from '../loading.service';
@@ -8,6 +14,7 @@ import { AuthService } from '../auth/auth.service';
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
+  // encapsulation: ViewEncapsulation.None, // for style to working with [innerHTML]
 })
 export class HomeComponent implements OnInit {
   questions: any;

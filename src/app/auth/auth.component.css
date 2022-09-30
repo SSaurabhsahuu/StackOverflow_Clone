@@ -1,16 +1,16 @@
 html,
-body {
+.body-container {
   min-height: 100vh;
   height: auto;
   margin: 0;
 }
-body {
+.body-container {
   background-color: rgb(239, 238, 244);
   font-family: "Roboto", sans-serif;
   /* height: 200%; */
 }
 
-.submit {
+.signUp {
   width: 315px;
   margin-top: 20px;
 }

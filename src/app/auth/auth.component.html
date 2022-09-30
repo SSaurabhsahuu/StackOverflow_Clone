@@ -1,6 +1,5 @@
 <body>
 
-
     <div class="login-box">
         <h1>{{ isLoginMode ? "Login" : "Sign Up" }}</h1>
         <h4>{{ isLoginMode ? "" : "It's free and only takes a minute" }}</h4>
@@ -28,7 +27,7 @@
                         <input type="password" id="password" class="form-control" ngModel name="password" required
                             minlength="2" />
                     </div>
-                    <button class="btn submit" data-type="success" type="submit" [disabled]="!authForm.valid">
+                    <button class="btn signUp" data-type="success" type="submit" [disabled]="!authForm.valid">
                         {{ isLoginMode ? "Login" : "Sign Up" }}
                     </button>
 

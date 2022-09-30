@@ -18,7 +18,8 @@ export class QuestionDetailComponent implements OnInit {
   answerOutput: any;
   userStatus: any;
   loading$ = this.loader.loading$;
-
+  authRequired = false;
+  parentFlag = true;
   dataChange = new Subject<void>(); // subject is event emitter
 
   constructor(
@@ -99,12 +100,34 @@ export class QuestionDetailComponent implements OnInit {
     // })
   }
 
+  // openModal = function () {
+  //   modal.classList.remove('hidden'); // modal div  width & height is made 50%
+  //   overlay.classList.remove('hidden'); // overlay is a div element whose width
+  // }; // & height is made 100% & position at top
+
+  // closeModal {
+  //   modal.classList.add('hidden');
+  //   overlay.classList.add('hidden');
+  // };
+  gotoLogin() {
+    if (localStorage.getItem('userData') == null) {
+      this.authRequired = true;
+    }
+  }
+  closeModal() {
+    this.authRequired = false;
+  }
   writeAnswer() {
-    (<HTMLInputElement>document.querySelector('.write')).style.display = 'none';
-    (<HTMLInputElement>document.querySelector('.writeAnswer')).style.display =
-      'block';
-    (<HTMLInputElement>document.querySelector('.cancel')).style.display =
-      'inline-block';
+    if (localStorage.getItem('userData') == null) {
+      this.gotoLogin();
+    } else {
+      (<HTMLInputElement>document.querySelector('.write')).style.display =
+        'none';
+      (<HTMLInputElement>document.querySelector('.writeAnswer')).style.display =
+        'block';
+      (<HTMLInputElement>document.querySelector('.cancel')).style.display =
+        'inline-block';
+    }
   }
   cancelWrite() {
     (<HTMLInputElement>document.querySelector('.write')).style.display =
@@ -126,9 +149,8 @@ export class QuestionDetailComponent implements OnInit {
     // this.answerOutput += `<div class="descP">${code}</div>`;
   }
   addStyle(str: any) {
-   
     str = this.addBreak(str);
-    
+
     while (str.search('@') != -1) {
       str = str.replace('@', `<p class="bold">`);
       str = str.replace('@', `</p>`);
@@ -137,7 +159,7 @@ export class QuestionDetailComponent implements OnInit {
       str = str.replace('<br>`', `<div class="descP">`);
       str = str.replace('`', `</div>`);
     }
-   
+
     this.answerOutput = str;
     return str;
   }
