@@ -30,21 +30,21 @@ export class AskQuestionComponent implements OnInit {
     return str.replace(/\n/g, '<br>');
   }
   addBold() {
-    this.questionBody += '@ Bold text @';
+    this.questionBody += 'ब Bold text ब';
   }
   addCode() {
-    this.questionBody += '`write code here`';
+    this.questionBody += '\nक write code here क';
   }
   addStyle(str: any) {
     str = this.addBreak(str);
 
-    while (str.search('@') != -1) {
-      str = str.replace('@', `<p class="bold">`);
-      str = str.replace('@', `</p>`);
+    while (str.search('ब') != -1) {
+      str = str.replace('ब', `<p class="bold">`);
+      str = str.replace('ब', `</p>`);
     }
-    while (str.search('<br>`') != -1) {
-      str = str.replace('<br>`', `<div class="descP">`);
-      str = str.replace('`', `</div>`);
+    while (str.search('<br>क') != -1) {
+      str = str.replace('<br>क', `<div class="descP">`);
+      str = str.replace('क', `</div>`);
     }
 
     this.questionOutput = str;
