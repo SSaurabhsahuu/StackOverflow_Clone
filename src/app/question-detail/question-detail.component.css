@@ -56,6 +56,9 @@
   width: 70px;
   height: 70px;
 }
+.svg-icon {
+  cursor: pointer;
+}
 .iconArrowUpLg {
   display: inline-block;
   position: absolute;
@@ -87,7 +90,6 @@
 .write {
   display: inline-block;
   position: absolute;
-
   right: 0px;
 }
 .cancel {
@@ -152,7 +154,12 @@
   display: inline;
   font-weight: bold;
 }
-
+/* .bold:empty:not(:focus)::before {
+  content: attr(data-placeholder);
+} */
+h5:empty:not(:focus)::before {
+  content: attr(data-placeholder);
+}
 /* modal */
 .hidden {
   display: none;

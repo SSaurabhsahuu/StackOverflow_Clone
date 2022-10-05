@@ -141,21 +141,21 @@ export class QuestionDetailComponent implements OnInit {
     return str.replace(/\n/g, '<br>');
   }
   addBold() {
-    this.answerBody += 'ब Bold text ब';
+    this.answerBody += '⁞⁞';
   }
   addCode() {
-    this.answerBody += '\nक write code here क';
+    this.answerBody += '⁗ write code here ⁗';
   }
   addStyle(str: any) {
     str = this.addBreak(str);
 
-    while (str.search('ब') != -1) {
-      str = str.replace('ब', `<p class="bold">`);
-      str = str.replace('ब', `</p>`);
+    while (str.search('⁞') != -1) {
+      str = str.replace('⁞', `<p class="bold" data-placeholder="huhu ">`);
+      str = str.replace('⁞', `</p>`);
     }
-    while (str.search('<br>क') != -1) {
-      str = str.replace('<br>क', `<div class="descP">`);
-      str = str.replace('क', `</div>`);
+    while (str.search('⁗') != -1) {
+      str = str.replace('⁗', `<div class="descP" placeholder="huhu code">`);
+      str = str.replace('⁗', `</div>`);
     }
 
     this.answerOutput = str;

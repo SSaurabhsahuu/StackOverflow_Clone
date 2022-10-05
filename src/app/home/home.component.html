@@ -1,18 +1,4 @@
-<!-- <p>home works!</p> -->
-<div>
-    <h2 class="website_name">StackOverflow</h2>
-    <form class="search">
-        <input type="text" class="search__field" [(ngModel)]="searchFor" name="searchFor" placeholder="Search..." />
-        <button class="btn " (click)="search()">
-            Search
-        </button>
-    </form>
-    <button class="btn" *ngIf="user == null" routerLink="/auth" data-type="primary">Login</button>
-    <h2 class="username" *ngIf="user != null">Welcome {{user.username}}</h2>
-    <button class="btn logout" *ngIf="user != null" routerLink="/" (click)="onLogout()"
-        data-type="danger">Logout</button>
-</div>
-<!-- <h2 *ngIf="user != null">Welcome {{user.username}}</h2> -->
+<app-header></app-header>
 
 <!-- <button class="btn" data-type="success">Button</button>
 <button class="btn" data-type="warning">Button</button>
@@ -30,7 +16,7 @@
         <button routerLink="/ask" class="btn ask" data-type="primary">Ask Question</button>
     </ng-container>
     <div class="topline"></div>
-    <div *ngIf="length == 0">Question Not Found 🙁</div>
+    <div *ngIf="length == 0 || length == undefined">Question Not Found 🙁</div>
     <div class="spinner" *ngIf="loading$ | async">
         <svg class="spinnerSvg">
             <use href="../../assets/icons.svg#icon-loader"></use>
@@ -52,7 +38,8 @@
         <br>
         <div class="ud">
             <p class="questionUsername">{{question_element.username}}</p>
-            <p class="date" *ngIf="question_element.timestamp != null"> asked {{question_element.timestamp.slice(0,10)}}
+            <p class="date" *ngIf="question_element.timestamp != null"> asked
+                {{question_element.timestamp.slice(0,10)}}
             </p>
         </div>
 

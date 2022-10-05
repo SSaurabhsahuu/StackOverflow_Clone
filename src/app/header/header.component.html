@@ -1,0 +1,13 @@
+<div>
+    <h2 class="website_name">StackOverflow</h2>
+    <form class="search">
+        <input type="text" class="search__field" [(ngModel)]="searchFor" name="searchFor" placeholder="Search..." />
+        <button class="btn " (click)="search()">
+            Search
+        </button>
+    </form>
+    <button class="btn" *ngIf="user == null" routerLink="/auth" data-type="primary">Login</button>
+    <h2 class="username" *ngIf="user != null">Welcome {{user.username}}</h2>
+    <button class="btn logout" *ngIf="user != null" routerLink="/" (click)="onLogout()"
+        data-type="danger">Logout</button>
+</div>

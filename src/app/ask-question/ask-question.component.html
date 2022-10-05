@@ -1,3 +1,4 @@
+<app-header></app-header>
 <div class="ask-box">
     <h2 class="head">Ask a public question</h2>
 
@@ -12,17 +13,17 @@
             <span class="help-block" *ngIf="nameCtrl.invalid && nameCtrl.touched">
                 Please enter question Title!</span>
 
-            <h3 class="qBody">Body</h3>
+            <h3 class="qBody">Description</h3>
             <div class="styleButtons">
                 <button type='button' (click)="addBold()">Bold</button>
                 <button type='button' (click)="addCode()">Code</button>
             </div>
             <br>
             <textarea type="text" class="bodyInput" [(ngModel)]="questionBody" name="questionBody" required
-                #nameCtrl="ngModel"></textarea>
+                #bodyCtrl="ngModel"></textarea>
             <br>
-            <span class="help-block" *ngIf="nameCtrl.invalid && nameCtrl.touched">
-                Please enter question Body!</span>
+            <span class="help-block" *ngIf="bodyCtrl.invalid && bodyCtrl.touched">
+                Please enter question Description!</span>
 
             <div class="bodyOutput" *ngIf="questionBody" [innerHtml]="addStyle(questionBody)"></div>
             <div><button class="btn submit" data-type="primary" type="submit" [disabled]="form.invalid">Submit

@@ -30,21 +30,21 @@ export class AskQuestionComponent implements OnInit {
     return str.replace(/\n/g, '<br>');
   }
   addBold() {
-    this.questionBody += 'ब Bold text ब';
+    this.questionBody += '⁞ Bold text ⁞';
   }
   addCode() {
-    this.questionBody += '\nक write code here क';
+    this.questionBody += '\n⁗ write code here ⁗';
   }
   addStyle(str: any) {
     str = this.addBreak(str);
 
-    while (str.search('ब') != -1) {
-      str = str.replace('ब', `<p class="bold">`);
-      str = str.replace('ब', `</p>`);
+    while (str.search('⁞') != -1) {
+      str = str.replace('⁞', `<p class="bold">`);
+      str = str.replace('⁞', `</p>`);
     }
-    while (str.search('<br>क') != -1) {
-      str = str.replace('<br>क', `<div class="descP">`);
-      str = str.replace('क', `</div>`);
+    while (str.search('<br>⁗') != -1) {
+      str = str.replace('<br>⁗', `<div class="descP">`);
+      str = str.replace('⁗', `</div>`);
     }
 
     this.questionOutput = str;
@@ -69,9 +69,8 @@ export class AskQuestionComponent implements OnInit {
     const headers = {
       Authorization:
         'Bearer ' + JSON.parse(localStorage.getItem('userData') || '').token,
-      'Access-Control-Allow-Origin': '*',
     };
-    console.log('token ', headers);
+    // console.log('token ', headers);
     console.log('fdsds ', localStorage.getItem('userData'));
     this.http
       .post<any>(

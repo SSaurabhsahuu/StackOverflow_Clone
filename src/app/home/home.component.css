@@ -1,22 +1,4 @@
-.website_name {
-  display: inline;
-  width: 100px;
-}
-.search {
-  display: inline;
-  width: auto;
-  margin-left: 150px;
-}
-.search__field {
-  width: 400px;
-}
-.username {
-  display: inline;
-  margin-left: 50px;
-}
-.logout {
-  margin-left: 30px;
-}
+
 .questions-container {
   position: relative;
   /* margin-left: 200px; */

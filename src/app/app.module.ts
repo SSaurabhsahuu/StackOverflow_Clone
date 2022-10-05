@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule, MatToolbarModule } from '@angular/material';
 import { NetworkInterceptor } from './network.interceptor';
 import { AuthComponent } from './auth/auth.component';
+import { HeaderComponent } from './header/header.component';
 // import { MatButtonModule,MatToolbarModule, MatProgressSpinnerModule } from '@angular/material';
 
 @NgModule({
@@ -22,7 +23,8 @@ import { AuthComponent } from './auth/auth.component';
     HomeComponent,
     QuestionDetailComponent,
     AskQuestionComponent,
-    AuthComponent
+    AuthComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

@@ -30,17 +30,29 @@ export class HomeComponent implements OnInit {
     private authService: AuthService,
     public loader: LoadingService
   ) {
+    console.log('constructor ');
     this.dataService = dataService;
+    this.questions = this.dataService.questions;
+
+    this.length =
+      this.questions == undefined ? undefined : this.questions.length;
   }
   // ngAfterViewInit(): void {
   //   this.renderSpinner((<HTMLInputElement>document.querySelector(".question-box")))
   // }
 
   ngOnInit(): void {
-    this.getQuestions();
+    console.log('ngInit');
+    if (this.questions == undefined) this.getQuestions();
 
     this.dataService.dataChange.subscribe(() => {
+      console.log('dataservice');
       this.getQuestions();
+    });
+    this.dataService.search.subscribe(() => {
+      this.questions = this.dataService.questions;
+      this.length = this.questions.length;
+      console.log('qqq ', this.questions, this.length);
     });
     this.authService.user.subscribe((data) => {
       this.user = data;
@@ -65,18 +77,7 @@ export class HomeComponent implements OnInit {
         // console.log("data ",data)
       });
   }
-  search() {
-    this.http
-      .get<any>(
-        'https://personal-stackoverflow.herokuapp.com/api/rest/questions/' +
-          this.searchFor
-      )
-      .subscribe((data) => {
-        this.questions = data;
-        this.length = this.questions.length;
-        console.log('data ', data);
-      });
-  }
+
   openQuestion(qId: any) {
     this.dataService.questionId = qId;
     const headers = {
@@ -91,8 +92,5 @@ export class HomeComponent implements OnInit {
       .subscribe((data) => {
         console.log(' views updated');
       });
-  }
-  onLogout() {
-    this.authService.logout();
   }
 }
