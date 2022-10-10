@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
     });
     this.dataService.search.subscribe(() => {
       this.questions = this.dataService.questions;
-      this.length = this.questions.length;
+      this.length = this.questions == null ? undefined : this.questions.length;
       console.log('qqq ', this.questions, this.length);
     });
     this.authService.user.subscribe((data) => {

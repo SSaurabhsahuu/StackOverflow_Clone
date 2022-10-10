@@ -181,10 +181,9 @@ export class QuestionDetailComponent implements OnInit {
 
     const body = {
       answer: newAnswer.value.answerBody,
-      views: 0,
-      username: JSON.parse(localStorage.getItem('userData') || '').username,
-      votesUp: 0,
-      votesDown: 0,
+      // views: 0,
+      // username: JSON.parse(localStorage.getItem('userData') || '').username,
+      // votes: 0,
     };
     const headers = {
       Authorization:

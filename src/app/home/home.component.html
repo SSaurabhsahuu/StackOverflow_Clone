@@ -26,7 +26,7 @@
 
         <div class="va">
             <p class="views">{{question_element.views}} views</p>
-            <p class="answers">{{question_element.answers.length}} answers</p>
+            <p class="answers">{{question_element.numberOfAnswers}} answers</p>
         </div>
         <div class="qd">
             <a class="question_ele" routerLink="/detail"
@@ -37,9 +37,9 @@
 
         <br>
         <div class="ud">
-            <p class="questionUsername">{{question_element.username}}</p>
+            <p class="questionUsername">{{question_element.users}}</p>
             <p class="date" *ngIf="question_element.timestamp != null"> asked
-                {{question_element.timestamp.slice(0,10)}}
+                {{question_element.timestamp.slice(0,16)}}
             </p>
         </div>
 

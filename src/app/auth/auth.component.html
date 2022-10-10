@@ -40,7 +40,7 @@
         </p>
     </div>
     <p class="para-2">
-        {{ isLoginMode ? "Already have an account?" : " Not have an account ?" }}
+        {{ !isLoginMode ? "Already have an account?" : " Not have an account ?" }}
         <button class="btn" data-type="primary" (click)="onSwitchMode()" type="button">
             {{ isLoginMode ? "Sign Up Here" : "Login here" }}
         </button>

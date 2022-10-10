@@ -36,8 +36,7 @@ export class AuthService {
     return this.http
       .post<AuthResponseData>(this.base_url + 'api/rest/user', {
         username: username,
-        password: password,
-        authorities: [],
+        password: password
       })
       .pipe(
         catchError(this.handleError)
