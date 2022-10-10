@@ -1,6 +1,7 @@
 .website_name {
   display: inline;
   width: 100px;
+  cursor: pointer;
 }
 .search {
   display: inline;

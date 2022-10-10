@@ -43,7 +43,10 @@ export class HeaderComponent implements OnInit {
 
         this.dataService.search.next();
 
-        this.length = this.dataService.questions.length;
+        this.length =
+          this.dataService.questions == null
+            ? undefined
+            : this.dataService.questions.length;
         console.log('data ', data);
         this.router.navigate([`/`]);
         console.log('routing');

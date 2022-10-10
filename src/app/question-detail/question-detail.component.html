@@ -18,13 +18,13 @@
     <h1>{{question.questionTitle}}</h1>
     <!-- <div class="topline"></div> -->
     <div class="voteBlock">
-        <svg aria-hidden="true" (click)="gotoLogin()" class="svg-icon iconArrowUpLg" width="36" height="36"
-            viewBox="0 0 36 36">
+        <svg aria-hidden="true" (click)="vote(1,'question',question.id)" class="svg-icon iconArrowUpLg" width="36"
+            height="36" viewBox="0 0 36 36">
             <path d="M2 25h32L18 9 2 25Z"></path>
         </svg>
         <h3 class="votes">0</h3>
-        <svg aria-hidden="true" (click)="gotoLogin()" class="svg-icon iconArrowDownLg" width="36" height="36"
-            viewBox="0 0 36 36">
+        <svg aria-hidden="true" (click)="vote(-1,'question',question.id)" class="svg-icon iconArrowDownLg" width="36"
+            height="36" viewBox="0 0 36 36">
             <path d="M2 11h32L18 27 2 11Z"></path>
         </svg>
     </div>
@@ -73,13 +73,13 @@
     <div class="answerBlock" *ngFor="let ans of question.answers">
 
         <div class="voteBlock">
-            <svg aria-hidden="true" (click)="gotoLogin()" class="svg-icon iconArrowUpLg" width="36" height="36"
-                viewBox="0 0 36 36">
+            <svg aria-hidden="true" (click)="vote(1,'answer',ans.id)" class="svg-icon iconArrowUpLg" width="36"
+                height="36" viewBox="0 0 36 36">
                 <path d="M2 25h32L18 9 2 25Z"></path>
             </svg>
             <h3 class="votes">{{ans.votes}}</h3>
-            <svg aria-hidden="true" (click)="gotoLogin()" class="svg-icon iconArrowDownLg" width="36" height="36"
-                viewBox="0 0 36 36">
+            <svg aria-hidden="true" (click)="vote(-1,'answer',ans.id)" class="svg-icon iconArrowDownLg" width="36"
+                height="36" viewBox="0 0 36 36">
                 <path d="M2 11h32L18 27 2 11Z"></path>
             </svg>
         </div>

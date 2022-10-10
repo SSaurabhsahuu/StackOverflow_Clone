@@ -40,6 +40,7 @@ export class QuestionDetailComponent implements OnInit {
     //   Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('userData') || '').token,
     // };
     if (this.dataService.questionId != undefined) {
+      console.log('dsq ', this.dataService.questionId);
       this.http
         .get<any>(
           'https://personal-stackoverflow.herokuapp.com/api/rest/question/' +
@@ -171,13 +172,6 @@ export class QuestionDetailComponent implements OnInit {
     if (newAnswer.invalid) {
       return;
     }
-    // console.log(
-    //   newAnswer.value.answerBody,
-    //   '\n output ',
-    //   newAnswer.value.answerOutput
-    // );
-    // newAnswer.value.answerBody = this.addBreak(newAnswer.value.answerBody);
-    // console.log('br  ', newAnswer.value.answerBody);
 
     const body = {
       answer: newAnswer.value.answerBody,
@@ -204,5 +198,31 @@ export class QuestionDetailComponent implements OnInit {
       });
 
     // this.router.navigate([`/courses`]);
+  }
+
+  vote(value: number, e: any, id: any) {
+    if (localStorage.getItem('userData') == null) {
+      this.gotoLogin();
+    } else {
+      const headers = {
+        Authorization:
+          'Bearer ' + JSON.parse(localStorage.getItem('userData') || '').token,
+      };
+      this.http
+        .put<any>(
+          'https://personal-stackoverflow.herokuapp.com/api/rest/' +
+            e +
+            '/' +
+            id +
+            '/' +
+            value,
+          { headers }
+        )
+        .subscribe((data) => {
+          // this.postId = data.id;
+          // console.log('new Answer ', data);
+          // this.dataChange.next(); // event emit so that subscribe can listen to it
+        });
+    }
   }
 }
