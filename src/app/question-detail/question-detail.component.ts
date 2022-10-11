@@ -57,6 +57,12 @@ export class QuestionDetailComponent implements OnInit {
     }
 
     this.dataChange.subscribe(() => {
+      // console.log('qqq ', JSON.parse(localStorage.getItem('question') || '{}'));
+      this.dataService.questionId = JSON.parse(
+        localStorage.getItem('question') || '{}'
+      ).id;
+
+      // console.log('data service ', this.dataService.questionId);
       this.http
         .get<any>(
           'https://personal-stackoverflow.herokuapp.com/api/rest/question/' +
@@ -175,9 +181,6 @@ export class QuestionDetailComponent implements OnInit {
 
     const body = {
       answer: newAnswer.value.answerBody,
-      // views: 0,
-      // username: JSON.parse(localStorage.getItem('userData') || '').username,
-      // votes: 0,
     };
     const headers = {
       Authorization:
@@ -218,15 +221,15 @@ export class QuestionDetailComponent implements OnInit {
             id +
             '/' +
             value,
-            null,
-            { headers }
+          null,
+          { headers }
         )
         .subscribe((data) => {
           // this.postId = data.id;
           console.log('new Answer ', data);
+          // this.closeModal()
           this.dataChange.next(); // event emit so that subscribe can listen to it
         });
-      
     }
   }
 }
