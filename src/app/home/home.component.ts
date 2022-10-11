@@ -80,14 +80,14 @@ export class HomeComponent implements OnInit {
 
   openQuestion(qId: any) {
     this.dataService.questionId = qId;
-    const headers = {
-      Authorization: 'Bearer ' + localStorage.getItem('userData'),
-    };
+    // const headers = {
+    //   Authorization: 'Bearer ' + localStorage.getItem('userData'),
+    // };
     this.http
       .put<any>(
         'https://personal-stackoverflow.herokuapp.com/api/rest/question/views/' +
           this.dataService.questionId,
-        { headers }
+        {}
       )
       .subscribe((data) => {
         console.log(' views updated');

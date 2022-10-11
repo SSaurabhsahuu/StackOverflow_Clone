@@ -204,10 +204,12 @@ export class QuestionDetailComponent implements OnInit {
     if (localStorage.getItem('userData') == null) {
       this.gotoLogin();
     } else {
+      console.log('head ', localStorage.getItem('userData'));
       const headers = {
         Authorization:
           'Bearer ' + JSON.parse(localStorage.getItem('userData') || '').token,
       };
+      console.log('header ', headers);
       this.http
         .put<any>(
           'https://personal-stackoverflow.herokuapp.com/api/rest/' +
@@ -216,13 +218,15 @@ export class QuestionDetailComponent implements OnInit {
             id +
             '/' +
             value,
-          { headers }
+            null,
+            { headers }
         )
         .subscribe((data) => {
           // this.postId = data.id;
-          // console.log('new Answer ', data);
-          // this.dataChange.next(); // event emit so that subscribe can listen to it
+          console.log('new Answer ', data);
+          this.dataChange.next(); // event emit so that subscribe can listen to it
         });
+      
     }
   }
 }
