@@ -20,6 +20,7 @@ export class QuestionDetailComponent implements OnInit {
   loading$ = this.loader.loading$;
   authRequired = false;
   parentFlag = true;
+  voteFlag = 0;
   dataChange = new Subject<void>(); // subject is event emitter
 
   constructor(
@@ -52,12 +53,15 @@ export class QuestionDetailComponent implements OnInit {
           localStorage.setItem('question', JSON.stringify(this.question));
           console.log('data', data);
         });
+
+      this.voteStatus();
     } else {
       this.question = JSON.parse(localStorage.getItem('question') || '{}');
     }
 
     this.dataChange.subscribe(() => {
       // console.log('qqq ', JSON.parse(localStorage.getItem('question') || '{}'));
+      this.voteStatus();
       this.dataService.questionId = JSON.parse(
         localStorage.getItem('question') || '{}'
       ).id;
@@ -116,6 +120,33 @@ export class QuestionDetailComponent implements OnInit {
   //   modal.classList.add('hidden');
   //   overlay.classList.add('hidden');
   // };
+  voteStatus() {
+    const headers = {
+      Authorization:
+        'Bearer ' + JSON.parse(localStorage.getItem('userData') || '').token,
+    };
+    this.http
+      .get<any>(
+        'https://personal-stackoverflow.herokuapp.com/api/rest/ques/vote/' +
+          this.dataService.questionId,
+        { headers }
+      )
+      .subscribe({
+        next: (data) => {
+          this.voteFlag = data.votes;
+          console.log('vote status ', data);
+        },
+        error: (errorMessage) => {
+          console.log(errorMessage);
+          this.voteFlag = 0;
+          console.log(errorMessage.status);
+          // this.error = errorMessage;
+
+          // this.isLoading = false;
+        },
+      });
+  }
+
   gotoLogin() {
     if (localStorage.getItem('userData') == null) {
       this.authRequired = true;

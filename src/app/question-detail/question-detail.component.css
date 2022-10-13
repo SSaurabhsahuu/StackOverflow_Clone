@@ -56,8 +56,28 @@
   width: 70px;
   height: 70px;
 }
+.arrowUp {
+  height: 20px;
+  width: 32px;
+  display: inline-block;
+  position: absolute;
+  /* top: -8px; */
+  margin: auto 15px;
+}
+.arrowDown {
+  height: 20px;
+  width: 32px;
+  display: inline-block;
+  position: absolute;
+  /* border: 1px solid red; */
+  top: 40px;
+  margin: auto 15px;
+}
 .svg-icon {
   cursor: pointer;
+}
+.svg-icon-orange {
+  background-color: orange;
 }
 .iconArrowUpLg {
   display: inline-block;
