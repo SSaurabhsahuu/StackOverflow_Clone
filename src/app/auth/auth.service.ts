@@ -19,7 +19,7 @@ export interface AuthResponseData {
   // kind: string;
   // idToken: string;
   // refreshToken: string;
-  // expiresIn: string;
+  expiresIn: string;
   // localId: string;
   // registered?: boolean;
 }
@@ -29,6 +29,7 @@ export class AuthService {
   user = new BehaviorSubject<User | null>(null); // store user data
   base_url = 'https://personal-stackoverflow.herokuapp.com/';
   private tokenExpirationTimer: any;
+  public expiresIn: any;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -36,7 +37,7 @@ export class AuthService {
     return this.http
       .post<AuthResponseData>(this.base_url + 'api/rest/user', {
         username: username,
-        password: password
+        password: password,
       })
       .pipe(
         catchError(this.handleError)
@@ -60,57 +61,68 @@ export class AuthService {
         })
       );
   }
-  private handleAuthentication(userData: AuthResponseData) {
+  dateToNumber(time: any) {
+    let curr = '' + time;
+    let num = Number.parseInt(curr.slice(0, 10));
+    return num;
+  }
+  private handleAuthentication(userData: any) {
     // const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
     let res: any = jwt_decode(userData.token);
     console.log('token   ', res);
-    const userObj = new User(res.sub, userData.token);
 
+    const userObj = new User(res.sub, userData.token, res.exp);
+    console.log(
+      'expire ',
+      userData.date,
+      this.dateToNumber(new Date().getTime())
+    );
     this.user.next(userObj); // user data modified
 
-    // this.autoLogout(expiresIn * 1000);
-
+    this.autoLogout(res.exp - this.dateToNumber(new Date().getTime()));
+    // this.autoLogout(1500);
     localStorage.setItem('userData', JSON.stringify(userObj));
     console.log('token value ', localStorage.getItem('userData'));
   }
   autoLogin() {
-    // const userData: {
-    //   email: string;
-    //   id: string;
-    //   _token: string;
-    //   _tokenExpirationDate: string;
-    // } = JSON.parse(localStorage.getItem('userData') || '{}');
-    // if (!userData) {
-    //   return;
-    // }
-    // const loadedUser = new User(userData.email, userData._token);
-    // if (loadedUser.token) {
-    //   this.user.next(loadedUser);
-    //   const expirationDuration =
-    //     new Date(userData._tokenExpirationDate).getTime() -
-    //     new Date().getTime();
-    //   this.autoLogout(expirationDuration);
-    // }
+    const loadedUser: User = JSON.parse(
+      localStorage.getItem('userData') || '{}'
+    );
+    if (!loadedUser) {
+      console.log('user ', loadedUser);
+      return;
+    }
+    if (loadedUser.token) {
+      this.user.next(loadedUser);
+      const expirationDuration =
+        Number(loadedUser.tokenExpirationDate) -
+        this.dateToNumber(new Date().getTime());
+      this.expiresIn = expirationDuration / 60;
+      console.log('token expire in ', this.expiresIn);
+      this.autoLogout(expirationDuration);
+    }
   }
 
   logout() {
+    console.log(' Logout .. ');
     this.user.next(null);
 
     // this.router.navigate(['/auth']);
 
     localStorage.removeItem('userData');
 
-    // if (this.tokenExpirationTimer) {
-    //   clearTimeout(this.tokenExpirationTimer);
-    // }
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
 
-    // this.tokenExpirationTimer = null;
+    this.tokenExpirationTimer = null;
   }
 
   autoLogout(expirationDuration: number) {
     this.tokenExpirationTimer = setTimeout(() => {
+      console.log('auto logout');
       this.logout();
-    }, expirationDuration);
+    }, expirationDuration * 1000);
   }
 
   private handleError(errorRes: HttpErrorResponse) {

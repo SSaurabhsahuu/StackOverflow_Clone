@@ -24,6 +24,8 @@ export class HomeComponent implements OnInit {
   dataService: DataService;
   loading$ = this.loader.loading$;
   user: any;
+  expiresIn: any;
+
   constructor(
     private http: HttpClient,
     dataService: DataService,
@@ -54,12 +56,17 @@ export class HomeComponent implements OnInit {
       this.length = this.questions == null ? undefined : this.questions.length;
       console.log('qqq ', this.questions, this.length);
     });
+
     this.authService.user.subscribe((data) => {
       this.user = data;
     });
 
+    // auto login
     if (localStorage.getItem('userData') != null)
       this.user = JSON.parse(localStorage.getItem('userData') || '');
+    this.authService.autoLogin();
+    this.expiresIn = this.authService.expiresIn;
+    // console.log('dfdf ', this.expiresIn);
   }
   getQuestions() {
     // const headers = {

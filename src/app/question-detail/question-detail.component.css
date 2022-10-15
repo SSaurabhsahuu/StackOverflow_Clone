@@ -62,7 +62,8 @@
   display: inline-block;
   position: absolute;
   /* top: -8px; */
-  margin: auto 15px;
+  margin: auto 17px;
+  cursor: pointer;
 }
 .arrowDown {
   height: 20px;
@@ -71,14 +72,13 @@
   position: absolute;
   /* border: 1px solid red; */
   top: 40px;
-  margin: auto 15px;
+  margin: auto 17px;
+  cursor: pointer;
 }
 .svg-icon {
   cursor: pointer;
 }
-.svg-icon-orange {
-  background-color: orange;
-}
+
 .iconArrowUpLg {
   display: inline-block;
   position: absolute;

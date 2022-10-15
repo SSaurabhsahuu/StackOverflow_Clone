@@ -46,7 +46,7 @@ export class AuthComponent {
     authObs.subscribe({
       next: (resData) => {
         console.log(resData);
-
+       
         // this.isLoading = false;
         if (this.flag == false) this.router.navigate(['/']);
         else window.location.reload();

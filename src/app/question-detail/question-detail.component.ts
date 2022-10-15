@@ -20,7 +20,8 @@ export class QuestionDetailComponent implements OnInit {
   loading$ = this.loader.loading$;
   authRequired = false;
   parentFlag = true;
-  voteFlag = 0;
+  voteFlag: any = 0;
+  voteFlagAns: any = [];
   dataChange = new Subject<void>(); // subject is event emitter
 
   constructor(
@@ -33,13 +34,7 @@ export class QuestionDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // let date = new Date();
-    // let start = date.getSeconds();
-    // console.log('start ', start);
-
-    // const headers = {
-    //   Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('userData') || '').token,
-    // };
+    // question opened from home
     if (this.dataService.questionId != undefined) {
       console.log('dsq ', this.dataService.questionId);
       this.http
@@ -49,24 +44,29 @@ export class QuestionDetailComponent implements OnInit {
         )
         .subscribe((data) => {
           this.question = data;
-
+          this.voteStatus('ques', this.dataService.questionId);
+          for (const [i, value] of this.question.answers.entries()) {
+            this.voteStatus('ans', this.question.answers[i].id, i);
+          }
           localStorage.setItem('question', JSON.stringify(this.question));
           console.log('data', data);
         });
-
-      this.voteStatus();
     } else {
+      // on page refresh
       this.question = JSON.parse(localStorage.getItem('question') || '{}');
+      this.voteStatus('ques', this.question.id);
+      for (const [i, value] of this.question.answers.entries()) {
+        this.voteStatus('ans', this.question.answers[i].id, i);
+      }
     }
 
+    // when write answer or upvote, downvote is made
     this.dataChange.subscribe(() => {
-      // console.log('qqq ', JSON.parse(localStorage.getItem('question') || '{}'));
-      this.voteStatus();
       this.dataService.questionId = JSON.parse(
         localStorage.getItem('question') || '{}'
       ).id;
 
-      // console.log('data service ', this.dataService.questionId);
+      // recall the question
       this.http
         .get<any>(
           'https://personal-stackoverflow.herokuapp.com/api/rest/question/' +
@@ -75,71 +75,75 @@ export class QuestionDetailComponent implements OnInit {
         .subscribe((data) => {
           this.question = data;
           localStorage.setItem('question', JSON.stringify(this.question));
+
+          this.voteStatus('ques', this.dataService.questionId);
+          for (const [i, value] of this.question.answers.entries()) {
+            this.voteStatus('ans', this.question.answers[i].id, i);
+          }
+
           console.log('data change', data);
         });
     });
-    // new Observable(observer => {
-    // let id = this.question != undefined ? this.question.id : null;
-    // console.log("id ",id)
-    // setTimeout(()=>{
-    //   let end = date.getSeconds();
-    // console.log("end",end)
-    // if(start < end && end-start >=10){
-    //   observer.next("In progress");
-    // }
-    // else if(start > end && (end+60)-start >=10){
-    //   observer.next("In progress");
-    // }
-    // console.log("router ",this.router.url+" id ",this.question.id)
-    // if(this.router.url === '/detail' &&  id == this.question.id)
-    //   observer.next("In progress");
-    // },10000)
-
-    // setTimeout(()=>{
-    //   observer.next("started");
-    // },4000)
-    // setTimeout(()=>{
-    //   observer.next("completed");
-    // },6000)
-
-    // }).subscribe(data =>{
-    //   this.userStatus = data;
-    //   this.http.put<any>('https://personal-stackoverflow.herokuapp.com/api/rest/question/views/'+this.dataService.questionId,{}).
-    //   subscribe(data => {
-    //     console.log(" views updated");
-    //   })
-    // })
   }
 
-  // openModal = function () {
-  //   modal.classList.remove('hidden'); // modal div  width & height is made 50%
-  //   overlay.classList.remove('hidden'); // overlay is a div element whose width
-  // }; // & height is made 100% & position at top
-
-  // closeModal {
-  //   modal.classList.add('hidden');
-  //   overlay.classList.add('hidden');
-  // };
-  voteStatus() {
+  vote(value: number, e: any, id: any) {
+    if (localStorage.getItem('userData') == null) {
+      this.gotoLogin();
+    } else {
+      console.log('head ', localStorage.getItem('userData'));
+      const headers = {
+        Authorization:
+          'Bearer ' + JSON.parse(localStorage.getItem('userData') || '').token,
+      };
+      console.log('header ', headers);
+      this.http
+        .put<any>(
+          'https://personal-stackoverflow.herokuapp.com/api/rest/' +
+            e +
+            '/' +
+            id +
+            '/' +
+            value,
+          null,
+          { headers }
+        )
+        .subscribe((data) => {
+          // console.log('voted ', data);
+          this.dataChange.next(); // event emit so that subscribe can listen to it
+        });
+    }
+  }
+  voteStatus(qa: any, id: any, index = 0) {
     const headers = {
       Authorization:
         'Bearer ' + JSON.parse(localStorage.getItem('userData') || '').token,
     };
     this.http
       .get<any>(
-        'https://personal-stackoverflow.herokuapp.com/api/rest/ques/vote/' +
-          this.dataService.questionId,
+        'https://personal-stackoverflow.herokuapp.com/api/rest/' +
+          qa +
+          '/vote/' +
+          id,
         { headers }
       )
       .subscribe({
         next: (data) => {
-          this.voteFlag = data.votes;
-          console.log('vote status ', data);
+          // console.log('vote status ', data);
+
+          if (qa == 'ques') this.voteFlag = data.votes;
+          else {
+            this.voteFlagAns[index] = data.votes;
+          }
         },
         error: (errorMessage) => {
           console.log(errorMessage);
-          this.voteFlag = 0;
+
+          if (qa == 'ques') this.voteFlag = 0;
+          else {
+            this.voteFlagAns[index] = 0;
+          }
           console.log(errorMessage.status);
+          // return 0;
           // this.error = errorMessage;
 
           // this.isLoading = false;
@@ -232,35 +236,5 @@ export class QuestionDetailComponent implements OnInit {
       });
 
     // this.router.navigate([`/courses`]);
-  }
-
-  vote(value: number, e: any, id: any) {
-    if (localStorage.getItem('userData') == null) {
-      this.gotoLogin();
-    } else {
-      console.log('head ', localStorage.getItem('userData'));
-      const headers = {
-        Authorization:
-          'Bearer ' + JSON.parse(localStorage.getItem('userData') || '').token,
-      };
-      console.log('header ', headers);
-      this.http
-        .put<any>(
-          'https://personal-stackoverflow.herokuapp.com/api/rest/' +
-            e +
-            '/' +
-            id +
-            '/' +
-            value,
-          null,
-          { headers }
-        )
-        .subscribe((data) => {
-          // this.postId = data.id;
-          console.log('new Answer ', data);
-          // this.closeModal()
-          this.dataChange.next(); // event emit so that subscribe can listen to it
-        });
-    }
   }
 }

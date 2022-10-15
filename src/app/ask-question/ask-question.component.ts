@@ -13,7 +13,7 @@ import { DataService } from '../data.service';
 export class AskQuestionComponent implements OnInit {
   questionTitle: any;
   questionBody: any;
-  postId: any;
+  // postId: any;
   dataService: DataService;
   questionOutput: any;
 
@@ -79,7 +79,7 @@ export class AskQuestionComponent implements OnInit {
         { headers }
       )
       .subscribe((data) => {
-        this.postId = data.id;
+        // this.postId = data.id;
       });
 
     this.dataService.dataChange.next(); // event emit so that subscribe can listen to it
