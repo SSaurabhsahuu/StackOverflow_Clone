@@ -63,7 +63,7 @@ export class HomeComponent implements OnInit {
 
     // auto login
     if (localStorage.getItem('userData') != null)
-      this.user = JSON.parse(localStorage.getItem('userData') || '');
+      this.user = JSON.parse(localStorage.getItem('userData') || '{}');
     this.authService.autoLogin();
     this.expiresIn = this.authService.expiresIn;
     // console.log('dfdf ', this.expiresIn);

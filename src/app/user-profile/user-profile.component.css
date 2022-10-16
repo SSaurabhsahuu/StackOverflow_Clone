@@ -1,0 +1,96 @@
+.profile-container {
+  position: relative;
+  margin-left: 18%;
+  height: 500px;
+  width: 730px;
+  /* border: 1px solid rgb(255, 255, 255); */
+}
+.tab {
+  position: absolute;
+  top: 130px;
+  left: 60px;
+  right: 0p;
+  /* margin: 0px auto; */
+  width: 100px;
+  /* border: 1px solid red; */
+}
+.AnsBtn {
+  width: 116px;
+  margin: 5px 0px;
+}
+.questions {
+  /* display: inline; */
+  /* position: absolute;
+  top: 10px;
+  left: 20px; */
+  font-size: larger;
+}
+.topline {
+  margin-top: 10px;
+  height: 1px;
+  background-color: rgb(141, 137, 137);
+}
+
+.question-box {
+  margin-top: 10px;
+  background-image: linear-gradient(rgba(245, 245, 245, 0), whitesmoke);
+}
+
+.va {
+  display: inline-block;
+  position: relative;
+  top: 5px;
+  left: 15px;
+  width: 85px;
+  height: 50px;
+}
+.views {
+  margin: 0px;
+  color: hsl(358, 64%, 35%);
+  margin: 0px auto;
+  margin-left: 28px;
+}
+.answers {
+  margin: 0px;
+  color: rgb(235, 237, 235);
+  background-color: hsl(140, 41%, 31%);
+  border-radius: 5px;
+  padding: 2px;
+  text-align: right;
+}
+.qd {
+  display: inline-block;
+  position: absolute;
+  margin-left: 30px;
+  /* border: 1px solid red; */
+  width: 600px;
+}
+.question_ele {
+  font-size: large;
+  color: hsl(209, 100%, 37.5%);
+  text-decoration: none;
+}
+.descriptionAtHome {
+  margin: 0px;
+  font-size: small;
+  color: hsl(210, 8%, 25%);
+  width: fit-content;
+}
+.questionUsername {
+  display: inline;
+  color: hsl(206, 100%, 40%);
+}
+.date {
+  display: inline;
+  color: gray;
+}
+.ud {
+  margin: 5px 0px;
+  float: right;
+  font-size: smaller;
+}
+.line {
+  height: 1.5px;
+  background-color: rgb(177, 175, 175);
+  clear: both;
+}

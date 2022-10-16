@@ -1,0 +1,67 @@
+<app-header></app-header>
+<!-- <p>user-profile works!</p> -->
+<div class="tab">
+    <button class="btn" data-type="primary" (click)=" getQuestions()">Questions</button>
+    <button class="btn AnsBtn" data-type="primary" (click)="getAnswers()">Answers</button>
+</div>
+<div class="profile-container">
+    <h1>{{user.username}}</h1>
+    <div class="questions" *ngIf="questions != undefined"><strong>All Questions ({{questions.length}})</strong></div>
+    <div class="topline"></div>
+    <div *ngIf="questions == undefined && answers == null">Question Not Found 🙁</div>
+    <div *ngIf="questions == null && answers == undefined ">Answers Not Found 🙁</div>
+    <div class="spinner" *ngIf="loading$ | async">
+        <svg class="spinnerSvg">
+            <use href="../../assets/icons.svg#icon-loader"></use>
+        </svg>
+    </div>
+    <div class="question-box" *ngFor="let question_element of questions">
+
+        <div class="va">
+            <p class="views">{{question_element.views}} views</p>
+            <p class="answers">{{question_element.numberOfAnswers}} answers</p>
+        </div>
+        <div class="qd">
+            <a class="question_ele" routerLink="/detail"
+                (click)="openQuestion(question_element.id)">{{question_element.questionTitle}}</a>
+
+            <p class="descriptionAtHome">{{question_element.questionDesc.slice(0,180)}}</p>
+        </div>
+
+        <br>
+        <div class="ud">
+            <p class="questionUsername">{{question_element.users}}</p>
+            <p class="date" *ngIf="question_element.timestamp != null"> asked
+                {{question_element.timestamp.slice(0,17)}}
+            </p>
+        </div>
+
+        <div class="line"></div>
+    </div>
+
+    <!-- answers list -->
+    <div class="question-box" *ngFor="let answer_element of answers">
+
+        <div class="va">
+            <p class="views">{{answer_element.votes}} votes</p>
+            <!-- <p class="answers">{{question_element.numberOfAnswers}} answers</p> -->
+        </div>
+        <div class="qd">
+            <!-- <a class="question_ele" routerLink="/detail" (click)="openQuestion(question_element.id)">
+                {{answer_element.questionTitle}}</a> -->
+            <a class="question_ele">
+                {{answer_element.questionTitle}}</a>
+            <p class="descriptionAtHome">{{answer_element.answer.slice(0,180)}}</p>
+        </div>
+
+        <br>
+        <div class="ud">
+            <!-- <p class="questionUsername">{{answer_element.users}}</p> -->
+            <p class="date" *ngIf="answer_element.timestamp != null">
+                {{answer_element.timestamp.slice(0,17)}}
+            </p>
+        </div>
+
+        <div class="line"></div>
+    </div>
+</div>

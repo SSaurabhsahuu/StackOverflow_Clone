@@ -116,6 +116,7 @@ export class AuthService {
     }
 
     this.tokenExpirationTimer = null;
+    // window.location.reload();
   }
 
   autoLogout(expirationDuration: number) {

@@ -93,7 +93,7 @@ export class QuestionDetailComponent implements OnInit {
       console.log('head ', localStorage.getItem('userData'));
       const headers = {
         Authorization:
-          'Bearer ' + JSON.parse(localStorage.getItem('userData') || '').token,
+          'Bearer ' + JSON.parse(localStorage.getItem('userData') || '{}').token,
       };
       console.log('header ', headers);
       this.http
@@ -116,7 +116,7 @@ export class QuestionDetailComponent implements OnInit {
   voteStatus(qa: any, id: any, index = 0) {
     const headers = {
       Authorization:
-        'Bearer ' + JSON.parse(localStorage.getItem('userData') || '').token,
+        'Bearer ' + JSON.parse(localStorage.getItem('userData') || '{}').token,
     };
     this.http
       .get<any>(
@@ -219,7 +219,7 @@ export class QuestionDetailComponent implements OnInit {
     };
     const headers = {
       Authorization:
-        'Bearer ' + JSON.parse(localStorage.getItem('userData') || '').token,
+        'Bearer ' + JSON.parse(localStorage.getItem('userData') || '{}').token,
     };
     this.http
       .post<any>(

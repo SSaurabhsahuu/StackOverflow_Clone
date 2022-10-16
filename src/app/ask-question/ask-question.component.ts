@@ -62,13 +62,13 @@ export class AskQuestionComponent implements OnInit {
       questionTitle: newQuestion.value.questionTitle,
       questionDesc: newQuestion.value.questionBody,
       views: 0,
-      username: JSON.parse(localStorage.getItem('userData') || '').username,
+      username: JSON.parse(localStorage.getItem('userData') || '{}').username,
       answers: null,
     };
 
     const headers = {
       Authorization:
-        'Bearer ' + JSON.parse(localStorage.getItem('userData') || '').token,
+        'Bearer ' + JSON.parse(localStorage.getItem('userData') || '{}').token,
     };
     // console.log('token ', headers);
     console.log('fdsds ', localStorage.getItem('userData'));

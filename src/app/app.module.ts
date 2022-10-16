@@ -15,6 +15,7 @@ import { NetworkInterceptor } from './network.interceptor';
 import { AuthComponent } from './auth/auth.component';
 import { HeaderComponent } from './header/header.component';
 import { AnswerDetailComponent } from './answer-detail/answer-detail.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 // import { MatButtonModule,MatToolbarModule, MatProgressSpinnerModule } from '@angular/material';
 
 @NgModule({
@@ -26,6 +27,7 @@ import { AnswerDetailComponent } from './answer-detail/answer-detail.component';
     AuthComponent,
     HeaderComponent,
     AnswerDetailComponent,
+    UserProfileComponent,
   ],
   imports: [BrowserModule, HttpClientModule, AppRoutingModule, FormsModule],
   providers: [

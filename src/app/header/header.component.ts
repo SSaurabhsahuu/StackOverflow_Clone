@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
     });
 
     if (localStorage.getItem('userData') != null)
-      this.user = JSON.parse(localStorage.getItem('userData') || '');
+      this.user = JSON.parse(localStorage.getItem('userData') || '{}');
   }
   search() {
     this.http

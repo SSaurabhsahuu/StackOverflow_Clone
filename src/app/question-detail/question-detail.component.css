@@ -22,8 +22,6 @@
 
 } */
 .description {
-  /* display: inline-block;
-  position: relative; */
   margin-top: -55px;
   margin-left: 90px;
   /* border: 1px solid blue; */
@@ -31,13 +29,9 @@
   padding-left: 10px;
 }
 .ud {
-  /* margin: 5px 0px; */
-  /* padding: 5px 0px; */
-  /* border:1px solid red; */
+ 
   float: right;
-  /* width: 200px; */
   font-size: smaller;
-  /* padding-right: 0; */
 }
 .username {
   display: inline;
@@ -48,9 +42,7 @@
   color: gray;
 }
 .voteBlock {
-  /* display: inline-block; */
   position: relative;
-  /* border: 1px solid red; */
   top: 20px;
   left: 5px;
   width: 70px;
@@ -61,7 +53,6 @@
   width: 32px;
   display: inline-block;
   position: absolute;
-  /* top: -8px; */
   margin: auto 17px;
   cursor: pointer;
 }
@@ -70,7 +61,6 @@
   width: 32px;
   display: inline-block;
   position: absolute;
-  /* border: 1px solid red; */
   top: 40px;
   margin: auto 17px;
   cursor: pointer;
@@ -84,28 +74,23 @@
   position: absolute;
   top: -8px;
   margin: auto 15px;
-  /* color: hsl(358,64%,35%); */
 }
 .iconArrowDownLg {
   display: inline-block;
   position: absolute;
-  /* border: 1px solid red; */
   top: 34px;
   margin: auto 15px;
-  /* color: hsl(358,64%,35%); */
 }
 .votes {
   display: inline-block;
   position: absolute;
   color: rgb(97, 100, 97);
-  /* background-color: hsl(140,41%,31%); */
   border-radius: 5px;
   padding: 2px 20px;
 }
 .answers {
   display: block;
   position: relative;
-  /* margin-top: auto; */
 }
 .write {
   display: inline-block;
