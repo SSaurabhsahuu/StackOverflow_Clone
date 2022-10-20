@@ -1,8 +1,14 @@
 # StackOverflowClone is Live
+
 [https://stackoverflow-clone-a77e8.web.app/](https://stackoverflow-clone-a77e8.web.app/)
-    
+
+# Refrences
+
+[Loading Spinner](https://zoaibkhan.com/blog/how-to-add-loading-spinner-in-angular-with-rxjs/)
+[firebase deployment with CI/CD](https://towardsdatascience.com/deploy-angular-apps-to-firebase-from-github-5f5ef0aad396)
+
 # StackOverflowClone
- 
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.0.
 
 ## Development server
@@ -10,6 +16,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
 ## For Deployment see
+
     `https://towardsdatascience.com/deploy-angular-apps-to-firebase-from-github-5f5ef0aad396`
 
 ## Code scaffolding

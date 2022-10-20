@@ -2,7 +2,7 @@
   position: relative;
   margin-left: 18%;
   height: fit-content;
-  width: 800px;
+  width: 850px;
   /* border:1px solid rgb(212, 19, 19); */
 }
 
@@ -21,6 +21,10 @@
     border: 1px solid blue;
 
 } */
+.edit {
+  margin-top: 5px;
+  margin-left: 660px;
+}
 .description {
   margin-top: -55px;
   margin-left: 90px;
@@ -29,7 +33,6 @@
   padding-left: 10px;
 }
 .ud {
- 
   float: right;
   font-size: smaller;
 }
@@ -116,6 +119,9 @@
 .qBody {
   margin-left: 20px;
 }
+/* .qTitle {
+  width: 750px;
+} */
 .title {
   margin-bottom: 2px;
   margin-left: 20px;

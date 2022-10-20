@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ApiCallService } from '../api-call.service';
 import { DataService } from '../data.service';
 import { LoadingService } from '../loading.service';
@@ -28,7 +29,8 @@ export class UserProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('ngonint');
+    console.log('ngonint user profile');
+
     this.user = JSON.parse(localStorage.getItem('userData') || '{}');
 
     console.log('usser ', this.user);
@@ -56,6 +58,20 @@ export class UserProfileComponent implements OnInit {
       next: (data) => {
         console.log('user answers ', data);
         this.answers = data;
+      },
+      error: (errorMessage) => {
+        console.log(errorMessage);
+      },
+    });
+  }
+  onDelete(type: any, id: any) {
+    this.apiCallService.deleteContent(type, id).subscribe({
+      next: (data) => {
+        console.log('deleted ', data);
+        if (type == 'question') this.getQuestions();
+        else {
+          this.getAnswers();
+        }
       },
       error: (errorMessage) => {
         console.log(errorMessage);

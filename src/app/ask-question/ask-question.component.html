@@ -1,10 +1,10 @@
-<app-header></app-header>
-<div class="ask-box">
+<!-- <app-header></app-header> -->
+<div class="ask-box" *ngIf="!dataService.editObj.editFlag">
     <h2 class="head">Ask a public question</h2>
 
     <div class="container">
         <!-- <h3>{{postId}}</h3> -->
-        <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+        <form (ngSubmit)="onSubmit(form,'new')" #form="ngForm">
 
             <h3 class="title">Title</h3>
             <input type="text" class="titleInput" [(ngModel)]="questionTitle" name="questionTitle" required
@@ -31,4 +31,43 @@
 
         </form>
     </div>
+</div>
+<div class="edit-container" *ngIf="dataService.editObj.editFlag">
+    <!-- <h1>{{editObj.questionTitle}}</h1> -->
+
+
+    <!-- <p class="description" [innerHtml]="addStyle(editObj.questionDesc)"></p>
+    <br> -->
+    <form (ngSubmit)="onSubmit(form,'edit')" #form="ngForm">
+
+        <textarea class="editTitle" [(ngModel)]="dataService.editObj.questionTitle" name="questionTitle" required
+            #nameCtrl="ngModel">
+            </textarea>
+        <div class="btn-right">
+            <button type="button" (click)="cancelEdit()" class="btn" data-type="warning">Cancel Edit</button>
+        </div>
+        <!-- <input type="text" class="titleInput" [(ngModel)]="questionTitle" name="questionTitle" required
+            #nameCtrl="ngModel"> -->
+
+        <span class="help-block" *ngIf="nameCtrl.invalid && nameCtrl.touched">
+            Please enter question Title!</span>
+
+        <div class="editstyleButtons">
+            <button type='button' (click)="addBold()">Bold</button>
+            <button type='button' (click)="addCode()">Code</button>
+        </div>
+
+        <textarea type="text" class="editInput" [(ngModel)]="dataService.editObj.questionDesc" name="questionBody"
+            required #bodyCtrl="ngModel">
+
+        </textarea>
+        <span class="help-block" *ngIf="bodyCtrl.invalid && bodyCtrl.touched">
+            Please enter question Description!</span>
+
+        <div class="editbodyOutput" *ngIf="dataService.editObj.questionDesc"
+            [innerHtml]="addStyle(dataService.editObj.questionDesc)"></div>
+        <div><button class="btn submit" data-type="primary" type="submit" [disabled]="form.invalid">Submit
+            </button></div>
+
+    </form>
 </div>

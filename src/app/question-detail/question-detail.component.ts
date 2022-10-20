@@ -2,17 +2,22 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
+import { ApiCallService } from '../api-call.service';
+import { AuthService } from '../auth/auth.service';
 import { DataService } from '../data.service';
 import { LoadingService } from '../loading.service';
+import { UserProfileComponent } from '../user-profile/user-profile.component';
 
 @Component({
   selector: 'app-question-detail',
   templateUrl: './question-detail.component.html',
   styleUrls: ['./question-detail.component.css'],
   encapsulation: ViewEncapsulation.None,
+  providers: [UserProfileComponent],
 })
 export class QuestionDetailComponent implements OnInit {
   dataService: DataService;
+  // apiCallService:ApiCallService
   question: any;
   answerBody: any;
   answerOutput: any;
@@ -22,18 +27,32 @@ export class QuestionDetailComponent implements OnInit {
   parentFlag = true;
   voteFlag: any = 0;
   voteFlagAns: any = [];
-  dataChange = new Subject<void>(); // subject is event emitter
+  user: any;
 
   constructor(
     private http: HttpClient,
     private router: Router,
     dataService: DataService,
-    public loader: LoadingService
+    private authService: AuthService,
+    private apiCallService: ApiCallService,
+    public loader: LoadingService,
+    private userProfile: UserProfileComponent
   ) {
     this.dataService = dataService;
+    // this.apiCallService = apiCallService
   }
 
   ngOnInit(): void {
+    console.log('ngonint question detail');
+    this.userProfile.ngOnInit();
+
+    // auto login
+    this.authService.autoLogin();
+
+    this.authService.user.subscribe((data) => {
+      this.user = data;
+    });
+
     // question opened from home
     if (this.dataService.questionId != undefined) {
       console.log('dsq ', this.dataService.questionId);
@@ -60,8 +79,8 @@ export class QuestionDetailComponent implements OnInit {
       }
     }
 
-    // when write answer or upvote, downvote is made
-    this.dataChange.subscribe(() => {
+    // when refresh, write answer , upvote, downvote is made
+    this.dataService.dataChange.subscribe(() => {
       this.dataService.questionId = JSON.parse(
         localStorage.getItem('question') || '{}'
       ).id;
@@ -85,7 +104,22 @@ export class QuestionDetailComponent implements OnInit {
         });
     });
   }
+  edit() {
+    if (localStorage.getItem('userData') == null) {
+      this.gotoLogin();
+    } else {
+      this.dataService.editObj.id = this.question.id;
+      this.dataService.editObj.questionTitle = this.question.questionTitle;
+      this.dataService.editObj.questionDesc = this.question.questionDesc;
+      this.dataService.editObj.editFlag = true;
+      this.dataService.dataChange.next();
+    }
+  }
 
+  onDelete(type: any, id: any) {
+    console.log('delete in details');
+    this.userProfile.onDelete(type, id);
+  }
   vote(value: number, e: any, id: any) {
     if (localStorage.getItem('userData') == null) {
       this.gotoLogin();
@@ -93,7 +127,8 @@ export class QuestionDetailComponent implements OnInit {
       console.log('head ', localStorage.getItem('userData'));
       const headers = {
         Authorization:
-          'Bearer ' + JSON.parse(localStorage.getItem('userData') || '{}').token,
+          'Bearer ' +
+          JSON.parse(localStorage.getItem('userData') || '{}').token,
       };
       console.log('header ', headers);
       this.http
@@ -109,7 +144,7 @@ export class QuestionDetailComponent implements OnInit {
         )
         .subscribe((data) => {
           // console.log('voted ', data);
-          this.dataChange.next(); // event emit so that subscribe can listen to it
+          this.dataService.dataChange.next(); // event emit so that subscribe can listen to it
         });
     }
   }
@@ -232,7 +267,7 @@ export class QuestionDetailComponent implements OnInit {
         // this.postId = data.id;
         console.log('new Answer ', data);
 
-        this.dataChange.next(); // event emit so that subscribe can listen to it
+        this.dataService.dataChange.next(); // event emit so that subscribe can listen to it
       });
 
     // this.router.navigate([`/courses`]);

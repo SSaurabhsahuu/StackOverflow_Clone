@@ -1,12 +1,15 @@
-<app-header></app-header>
+<!-- <app-header></app-header> -->
 <!-- <p>user-profile works!</p> -->
+
+
 <div class="tab">
-    <button class="btn" data-type="primary" (click)=" getQuestions()">Questions</button>
+    <button class="btn AnsBtn" data-type="primary" (click)=" getQuestions()">Questions</button>
     <button class="btn AnsBtn" data-type="primary" (click)="getAnswers()">Answers</button>
 </div>
 <div class="profile-container">
     <h1>{{user.username}}</h1>
     <div class="questions" *ngIf="questions != undefined"><strong>All Questions ({{questions.length}})</strong></div>
+    <div class="questions" *ngIf="answers != undefined"><strong>All Answers ({{answers.length}})</strong></div>
     <div class="topline"></div>
     <div *ngIf="questions == undefined && answers == null">Question Not Found 🙁</div>
     <div *ngIf="questions == null && answers == undefined ">Answers Not Found 🙁</div>
@@ -23,11 +26,11 @@
         </div>
         <div class="qd">
             <a class="question_ele" routerLink="/detail"
-                (click)="openQuestion(question_element.id)">{{question_element.questionTitle}}</a>
+                (click)="openQuestion(question_element.id)">{{question_element.questionTitle.slice(0,150)}} ...</a>
 
-            <p class="descriptionAtHome">{{question_element.questionDesc.slice(0,180)}}</p>
+            <p class="descriptionAtHome">{{question_element.questionDesc.slice(0,180)}} ...</p>
         </div>
-
+        <button class="btn delete" data-type="danger" (click)="onDelete('question',question_element.id)">Delete</button>
         <br>
         <div class="ud">
             <p class="questionUsername">{{question_element.users}}</p>
@@ -47,13 +50,13 @@
             <!-- <p class="answers">{{question_element.numberOfAnswers}} answers</p> -->
         </div>
         <div class="qd">
-            <!-- <a class="question_ele" routerLink="/detail" (click)="openQuestion(question_element.id)">
-                {{answer_element.questionTitle}}</a> -->
-            <a class="question_ele">
+            <a class="question_ele" routerLink="/detail" (click)="openQuestion(answer_element.questionId)">
                 {{answer_element.questionTitle}}</a>
+            <!-- <a class="question_ele">
+                {{answer_element.questionTitle}}</a> -->
             <p class="descriptionAtHome">{{answer_element.answer.slice(0,180)}}</p>
         </div>
-
+        <button class="btn delete" data-type="danger" (click)="onDelete('answer',answer_element.id)">Delete</button>
         <br>
         <div class="ud">
             <!-- <p class="questionUsername">{{answer_element.users}}</p> -->

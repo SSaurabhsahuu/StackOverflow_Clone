@@ -2,7 +2,7 @@
   position: relative;
   margin-left: 18%;
   height: 500px;
-  width: 730px;
+  width: 850px;
   /* border: 1px solid rgb(255, 255, 255); */
 }
 .tab {
@@ -17,6 +17,7 @@
 .AnsBtn {
   width: 116px;
   margin: 5px 0px;
+  border-radius: 50px;
 }
 .questions {
   /* display: inline; */
@@ -32,6 +33,7 @@
 }
 
 .question-box {
+  /* width: 850px; */
   margin-top: 10px;
   background-image: linear-gradient(rgba(245, 245, 245, 0), whitesmoke);
 }
@@ -75,6 +77,9 @@
   font-size: small;
   color: hsl(210, 8%, 25%);
   width: fit-content;
+}
+.delete {
+  margin-left: 650px;
 }
 .questionUsername {
   display: inline;

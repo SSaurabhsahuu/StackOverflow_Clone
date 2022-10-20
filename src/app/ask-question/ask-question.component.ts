@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { DataService } from '../data.service';
+import { ApiCallService } from '../api-call.service';
 
 @Component({
   selector: 'app-ask-question',
@@ -15,25 +16,34 @@ export class AskQuestionComponent implements OnInit {
   questionBody: any;
   // postId: any;
   dataService: DataService;
+  apiCallService: ApiCallService;
   questionOutput: any;
 
   constructor(
     private http: HttpClient,
     private router: Router,
-    dataService: DataService
+    dataService: DataService,
+    apiCall: ApiCallService
   ) {
     this.dataService = dataService;
+    this.apiCallService = apiCall;
   }
 
   ngOnInit(): void {}
+  cancelEdit() {
+    this.dataService.editObj.editFlag = false;
+    this.dataService.dataChange.next();
+  }
   addBreak(str: any) {
     return str.replace(/\n/g, '<br>');
   }
   addBold() {
     this.questionBody += '⁞ Bold text ⁞';
+    this.dataService.editObj.questionDesc += '⁞ Bold text ⁞';
   }
   addCode() {
     this.questionBody += '\n⁗ write code here ⁗';
+    this.dataService.editObj.questionDesc += '\n⁗ write code here ⁗';
   }
   addStyle(str: any) {
     str = this.addBreak(str);
@@ -50,20 +60,13 @@ export class AskQuestionComponent implements OnInit {
     this.questionOutput = str;
     return str;
   }
-  onSubmit(newQuestion: any) {
+  onSubmit(newQuestion: any, type: any) {
     if (newQuestion.invalid) {
       return;
     }
-    // console.log(newQuestion.value.questionTitle);
-    // let desc = `<h2>hello</h2><br>
-    // <p style="background-color:gray;color:red">${newQuestion.value.questionBody}</p>br
-    //               `;
     const body = {
       questionTitle: newQuestion.value.questionTitle,
       questionDesc: newQuestion.value.questionBody,
-      views: 0,
-      username: JSON.parse(localStorage.getItem('userData') || '{}').username,
-      answers: null,
     };
 
     const headers = {
@@ -71,19 +74,29 @@ export class AskQuestionComponent implements OnInit {
         'Bearer ' + JSON.parse(localStorage.getItem('userData') || '{}').token,
     };
     // console.log('token ', headers);
-    console.log('fdsds ', localStorage.getItem('userData'));
-    this.http
-      .post<any>(
-        'https://personal-stackoverflow.herokuapp.com/api/rest/question',
-        body,
-        { headers }
-      )
-      .subscribe((data) => {
-        // this.postId = data.id;
-      });
 
-    this.dataService.dataChange.next(); // event emit so that subscribe can listen to it
+    if (type == 'new') {
+      this.http
+        .post<any>(
+          'https://personal-stackoverflow.herokuapp.com/api/rest/question',
+          body,
+          { headers }
+        )
+        .subscribe((data) => {
+          console.log(data);
+        });
 
-    this.router.navigate([``]);
+      this.dataService.dataChange.next(); // event emit so that subscribe can listen to it
+
+      this.router.navigate([``]);
+    } else {
+      this.apiCallService
+        .editContent('question', this.dataService.editObj.id, body)
+        .subscribe((data) => {
+          console.log('edit success', data);
+          this.dataService.editObj.editFlag = false;
+          this.dataService.dataChange.next(); // event emit so that subscribe can listen to it
+        });
+    }
   }
 }

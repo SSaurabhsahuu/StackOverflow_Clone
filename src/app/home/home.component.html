@@ -1,4 +1,4 @@
-<app-header></app-header>
+<!-- <app-header></app-header> -->
 <!-- <h2>Session expires in {{expiresIn}}</h2> -->
 <!-- <button class="btn" data-type="success">Button</button>
 <button class="btn" data-type="warning">Button</button>
@@ -30,9 +30,9 @@
         </div>
         <div class="qd">
             <a class="question_ele" routerLink="/detail"
-                (click)="openQuestion(question_element.id)">{{question_element.questionTitle}}</a>
+                (click)="openQuestion(question_element.id)">{{question_element.questionTitle.slice(0,150)}} ...</a>
 
-            <p class="descriptionAtHome">{{question_element.questionDesc.slice(0,180)}}</p>
+            <p class="descriptionAtHome">{{question_element.questionDesc.slice(0,180)}} ...</p>
         </div>
 
         <br>
