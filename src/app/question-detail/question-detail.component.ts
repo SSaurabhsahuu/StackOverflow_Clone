@@ -27,6 +27,8 @@ export class QuestionDetailComponent implements OnInit {
   parentFlag = true;
   voteFlag: any = 0;
   voteFlagAns: any = [];
+  editAnswerFlag = 0;
+  editanswerBody = '';
   user: any;
 
   constructor(
@@ -104,21 +106,28 @@ export class QuestionDetailComponent implements OnInit {
         });
     });
   }
-  edit() {
+  edit(type: any, id: any, ans: any) {
     if (localStorage.getItem('userData') == null) {
       this.gotoLogin();
     } else {
-      this.dataService.editObj.id = this.question.id;
-      this.dataService.editObj.questionTitle = this.question.questionTitle;
-      this.dataService.editObj.questionDesc = this.question.questionDesc;
-      this.dataService.editObj.editFlag = true;
-      this.dataService.dataChange.next();
+      if (type == 'question') {
+        this.dataService.editObj.id = this.question.id;
+        this.dataService.editObj.questionTitle = this.question.questionTitle;
+        this.dataService.editObj.questionDesc = this.question.questionDesc;
+        this.dataService.editObj.editFlag = true;
+      } else {
+        this.editAnswerFlag = id;
+        this.editanswerBody = ans;
+      }
     }
   }
-
+  cancelEdit() {
+    this.editAnswerFlag = 0;
+  }
   onDelete(type: any, id: any) {
     console.log('delete in details');
     this.userProfile.onDelete(type, id);
+    this.dataService.dataChange.next();
   }
   vote(value: number, e: any, id: any) {
     if (localStorage.getItem('userData') == null) {
@@ -252,6 +261,7 @@ export class QuestionDetailComponent implements OnInit {
     const body = {
       answer: newAnswer.value.answerBody,
     };
+    console.log('new answer ', body);
     const headers = {
       Authorization:
         'Bearer ' + JSON.parse(localStorage.getItem('userData') || '{}').token,
@@ -271,5 +281,28 @@ export class QuestionDetailComponent implements OnInit {
       });
 
     // this.router.navigate([`/courses`]);
+  }
+  editSubmit(form: any) {
+    const body = {
+      answer: form.value.editanswerBody,
+    };
+    // console.log('form data ', form);
+    const headers = {
+      Authorization:
+        'Bearer ' + JSON.parse(localStorage.getItem('userData') || '{}').token,
+    };
+    this.http
+      .put<any>(
+        'https://personal-stackoverflow.herokuapp.com/api/rest/answer/' +
+          this.editAnswerFlag,
+        body,
+        { headers }
+      )
+      .subscribe((data) => {
+        // this.postId = data.id;
+        console.log('edit Answer ', data);
+        this.editAnswerFlag = 0;
+        this.dataService.dataChange.next(); // event emit so that subscribe can listen to it
+      });
   }
 }

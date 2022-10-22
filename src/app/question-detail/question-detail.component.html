@@ -18,8 +18,8 @@
 <div class="questions-container" *ngIf="question != undefined ">
     <ng-container *ngIf="dataService.editObj.editFlag == false">
         <h1>{{question.questionTitle}}</h1>
-        <ng-container *ngIf="question.users == user.username">
-            <button class="btn edit" (click)="edit()" data-type="primary">Edit</button>
+        <ng-container *ngIf="user && question.users == user.username">
+            <button class="btn edit" (click)="edit('question',question.id,'')" data-type="primary">Edit</button>
             <button class="btn" data-type="danger" (click)="onDelete('question',question.id)">Delete</button>
         </ng-container>
         <div class="voteBlock">
@@ -83,28 +83,65 @@
     </div>
     <div class="answerBlock" *ngFor="let ans of question.answers; let i = index">
         <!-- <app-answer-detail  [answer]="ans"></app-answer-detail> -->
-        <ng-container *ngIf="ans.username == user.username">
-            <button class="btn edit" (click)="edit()" data-type="primary">Edit</button>
-            <button class="btn" data-type="danger" (click)="onDelete('answer',ans.id)">Delete</button>
+        <ng-container *ngIf="editAnswerFlag != ans.id">
+            <div class="ed">
+                <p *ngIf="ans.edited" class="edited">
+                    Edited
+                </p>
+                <ng-container *ngIf="user && ans.username == user.username">
+                    <button class="btn edit" (click)="edit('answer',ans.id,ans.answer)"
+                        data-type="primary">Edit</button>
+                    <button class="btn" data-type="danger" (click)="onDelete('answer',ans.id)">Delete</button>
+                </ng-container>
+            </div>
+
+
+            <div class="voteBlock">
+
+                <svg *ngIf="voteFlagAns[i] != 1" (click)="vote(1,'answer',ans.id)" class="svg-icon iconArrowUpLg"
+                    width="36" height="36" viewBox="0 0 36 36">
+                    <path d="M2 25h32L18 9 2 25Z"></path>
+                </svg>
+                <img class="arrowUp " *ngIf="voteFlagAns[i] == 1" (click)="vote(1,'answer',ans.id)"
+                    src="../../assets/images/upvoteOrange.png" alt="">
+                <h3 class="votes">{{ans.votes}}</h3>
+                <img class="arrowDown " *ngIf="voteFlagAns[i] == -1" (click)="vote(-1,'answer',ans.id)"
+                    src="../../assets/images/downvoteOrange.jpg" alt="">
+                <svg *ngIf="voteFlagAns[i] != -1" (click)="vote(-1,'answer',ans.id)" class="svg-icon iconArrowDownLg"
+                    width="36" height="36" viewBox="0 0 36 36">
+                    <path d="M2 11h32L18 27 2 11Z"></path>
+                </svg>
+            </div>
+
+
+            <p class="description" [innerHtml]="addStyle(ans.answer)"></p>
         </ng-container>
-        <div class="voteBlock">
+        <ng-container *ngIf="editAnswerFlag == ans.id">
+            <div>
+                <!-- <h3>{{postId}}</h3> -->
+                <div class="btn-right">
+                    <button type="button" (click)="cancelEdit()" class="btn" data-type="warning">Cancel Edit</button>
+                </div>
+                <form (ngSubmit)="editSubmit(form)" #form="ngForm">
 
-            <svg *ngIf="voteFlagAns[i] != 1" (click)="vote(1,'answer',ans.id)" class="svg-icon iconArrowUpLg" width="36"
-                height="36" viewBox="0 0 36 36">
-                <path d="M2 25h32L18 9 2 25Z"></path>
-            </svg>
-            <img class="arrowUp " *ngIf="voteFlagAns[i] == 1" (click)="vote(1,'answer',ans.id)"
-                src="../../assets/images/upvoteOrange.png" alt="">
-            <h3 class="votes">{{ans.votes}}</h3>
-            <img class="arrowDown " *ngIf="voteFlagAns[i] == -1" (click)="vote(-1,'answer',ans.id)"
-                src="../../assets/images/downvoteOrange.jpg" alt="">
-            <svg *ngIf="voteFlagAns[i] != -1" (click)="vote(-1,'answer',ans.id)" class="svg-icon iconArrowDownLg"
-                width="36" height="36" viewBox="0 0 36 36">
-                <path d="M2 11h32L18 27 2 11Z"></path>
-            </svg>
-        </div>
+                    <!-- <h3 class="title">Edit Answer</h3> -->
+                    <div class="editstyleButtons">
+                        <button type='button' (click)="addBold()">Bold</button>
+                        <button type='button' (click)="addCode()">Code</button>
+                    </div>
 
-        <p class="description" [innerHtml]="addStyle(ans.answer)"></p>
+                    <textarea type="text" class="editInput" [(ngModel)]="editanswerBody" name="editanswerBody" required
+                        #nameCtrl="ngModel"></textarea>
+                    <br>
+                    <span class="help-block" *ngIf="nameCtrl.invalid && nameCtrl.touched">
+                        Please enter your Answer!</span>
+                    <div class="editbodyOutput" *ngIf="answerBody" [innerHtml]="addStyle(editanswerBody)"></div>
+                    <div><button class="btn submit" type="submit" [disabled]="form.invalid" data-type="success">Submit
+                        </button></div>
+                </form>
+
+            </div>
+        </ng-container>
         <br>
 
         <div class="ud">
