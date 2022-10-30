@@ -39,6 +39,7 @@ export class UserProfileComponent implements OnInit {
     this.getQuestions();
   }
   getQuestions() {
+    this.questions = null;
     this.answers = null;
     console.log('json ', JSON.parse(localStorage.getItem('userData') || '{}'));
     this.apiCallService.getUserQuestions().subscribe({
@@ -53,7 +54,7 @@ export class UserProfileComponent implements OnInit {
   }
   getAnswers() {
     this.questions = null;
-
+    this.answers = null;
     this.apiCallService.getUserAnswers().subscribe({
       next: (data) => {
         console.log('user answers ', data);

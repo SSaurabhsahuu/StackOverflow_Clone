@@ -127,7 +127,9 @@ export class QuestionDetailComponent implements OnInit {
   onDelete(type: any, id: any) {
     console.log('delete in details');
     this.userProfile.onDelete(type, id);
+
     this.dataService.dataChange.next();
+    this.router.navigate([`/`]);
   }
   vote(value: number, e: any, id: any) {
     if (localStorage.getItem('userData') == null) {
